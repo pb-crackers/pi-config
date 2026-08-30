@@ -7,7 +7,7 @@ failed=0
 
 check_link() {
   local source=$1 destination=$2
-  if [[ ! -L "$destination" || "$(readlink -f "$destination")" != "$(readlink -f "$source")" ]]; then
+  if [[ ! -L "$destination" || ! "$destination" -ef "$source" ]]; then
     echo "FAIL: $destination is not linked to $source" >&2
     failed=1
   fi
@@ -29,7 +29,8 @@ import json, pathlib, sys
 agent_dir, settings_path = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
 settings = json.loads(settings_path.read_text())
 for spec in settings["packages"]:
-    name, expected = spec.removeprefix("npm:").rsplit("@", 1)
+    package = spec[4:] if spec.startswith("npm:") else spec
+    name, expected = package.rsplit("@", 1)
     package_file = agent_dir / "npm/node_modules" / name / "package.json"
     try:
         actual = json.loads(package_file.read_text())["version"]

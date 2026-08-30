@@ -5,15 +5,17 @@ ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 AGENT_DIR=${PI_CODING_AGENT_DIR:-"$HOME/.pi/agent"}
 
 command -v pi >/dev/null || { echo "pi is not installed" >&2; exit 1; }
+command -v python3 >/dev/null || { echo "python3 is not installed" >&2; exit 1; }
 mkdir -p "$AGENT_DIR/skills" "$AGENT_DIR/themes"
 
 link_config() {
   local source=$1 destination=$2 backup
-  if [[ -L "$destination" && "$(readlink -f "$destination")" == "$(readlink -f "$source")" ]]; then
+  if [[ -L "$destination" && "$destination" -ef "$source" ]]; then
     return
   fi
   if [[ -e "$destination" || -L "$destination" ]]; then
     backup="$destination.backup.$(date +%Y%m%d%H%M%S)"
+    while [[ -e "$backup" || -L "$backup" ]]; do backup="$backup.1"; done
     mv -- "$destination" "$backup"
     echo "Backed up $destination to $backup"
   fi
