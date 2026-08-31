@@ -16,7 +16,7 @@ check_link() {
 check_link "$ROOT/AGENTS.md" "$AGENT_DIR/AGENTS.md"
 check_link "$ROOT/settings.json" "$AGENT_DIR/settings.json"
 check_link "$ROOT/themes/omarchy-system.json" "$AGENT_DIR/themes/omarchy-system.json"
-for skill in dev-workflow capture-todo discuss-feature build-feature uat-feature ship-feature supabase supabase-postgres-best-practices; do
+for skill in dev-workflow capture-todo discuss-feature plan-feature build-feature uat-feature ship-feature supabase supabase-postgres-best-practices; do
   check_link "$ROOT/skills/$skill" "$AGENT_DIR/skills/$skill"
   if ! grep -q '^name:' "$ROOT/skills/$skill/SKILL.md" || ! grep -q '^description:' "$ROOT/skills/$skill/SKILL.md"; then
     echo "FAIL: invalid skill metadata: $skill" >&2

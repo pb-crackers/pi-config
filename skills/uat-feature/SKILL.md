@@ -1,60 +1,46 @@
 ---
 name: uat-feature
 description: >
-  User acceptance phase used by dev-workflow after implementation. Exercises
-  acceptance criteria, requires direct visual approval for UI changes, records
-  evidence, and returns failed behavior to implementation.
+  User acceptance phase used by dev-workflow after Build has prepared a fresh
+  validated build. Presents the app in its required test state, records user
+  approval, and returns failed work to implementation.
 disable-model-invocation: true
 ---
 
 # UAT Feature
 
-Require a plan with `Status: awaiting-uat`, or the user-confirmed acceptance
-summary for a trivial change. The parent owns product operation, evidence
-collection, and every question to the user.
+Require `plans/<slug>/plan.md` with `Status: awaiting-uat`. The parent owns
+product operation, evidence collection, and user questions.
 
 ## Validate
 
-1. Exercise each acceptance criterion through the real user-facing path where
-   practical, not only unit tests or code inspection.
-2. Record commands, results, screenshots, logs, and limitations in the plan or
-   acceptance summary.
-3. Load `pi-subagents` when useful:
-   - fresh-context `reviewer`: validate the diff against the acceptance criteria;
-   - skill-specialist `reviewer`: inspect relevant SwiftUI, accessibility,
-     security, or platform concerns.
-4. Subagents may provide evidence but cannot approve behavior or visuals. Route
-   every fix back through `build-feature`.
+1. Confirm Build recorded the fresh build, target environment, state setup,
+   commands, and required visual states.
+2. Exercise each success criterion through the real user-facing path where
+   practical, not only tests or code inspection.
+3. Use roles as needed:
+   - specialist `reviewer`: inspect a specific SwiftUI, accessibility, security,
+     or platform concern;
+   - `researcher` or `oracle`: resolve an unexpected external or technical
+     question without making product decisions.
+4. Subagents provide evidence only. Route every fix through `build-feature`.
 
-## Visual gate
+## Visual and acceptance gate
 
-For any changed visual or UI state, the parent must:
+For UI work, the fresh app must already be open in the planned state. Present
+the captured screenshots and the running app, then ask the user to approve,
+request changes, or state that they cannot verify it. Do not treat a build,
+test, or screenshot as user approval.
 
-1. Produce a fresh build from the current source.
-2. Install and launch the product in its target test environment.
-3. Navigate through every changed state and interaction.
-4. Capture clear screenshots of those states.
-5. Present the evidence and ask the user to approve, request changes, or state
-   that they cannot verify it.
+Present every success criterion with its evidence and ask the user to confirm
+the expected behavior.
 
-For iOS, build with the project's Xcode scheme, boot the appropriate simulator,
-install and launch the new app build, and use XCTest/XCUIAutomation when needed
-to reach changed states. A successful Xcode build is not visual approval.
-
-Do not commit UI implementation or report completion before approval. Repeat the
-build and visual gate after every requested UI change.
-
-## Acceptance gate
-
-Present the acceptance criteria with evidence and ask the user to confirm the
-expected behavior.
-
-- If approved, record the approval and, when a plan exists, set
-  `Status: approved-to-ship`.
-- If changes are requested, record the failed criterion, set an existing plan to
-  `Status: building`, return to `build-feature`, then repeat UAT.
-- If the user cannot verify required behavior, leave an existing plan at
-  `Status: awaiting-uat` and report the blocker.
+- If approved, record approval and set the plan to `approved-to-ship`.
+- If changes are requested, record the failed criterion, set the plan to
+  `building`, return to `build-feature`, and repeat its review and UI
+  validation loop.
+- If the user cannot verify required behavior, leave the plan at `awaiting-uat`
+  and report the blocker.
 
 Ask whether to continue to `ship-feature` only after all required behavior and
 visual states are approved.
