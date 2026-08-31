@@ -1,75 +1,65 @@
 ---
 name: build-feature
 description: >
-  Implementation phase used by dev-workflow after a task plan is approved.
-  Implements with one writer, focused tests, independent review, and a handoff
-  to UAT without claiming user or visual approval.
+  Implementation phase used by dev-workflow after an implementation plan is
+  approved. Builds the approved scope, reviews and fixes it, and always prepares
+  the current build for UAT.
 disable-model-invocation: true
 ---
 
 # Build Feature
 
-Require an approved plan or a user-confirmed acceptance summary for a trivial
-change. When a plan exists, set its status to `building` before implementation.
+Require an approved implementation plan at `plans/<slug>/plan.md`. Set it to
+`building` before implementation.
 
 ## Implement
 
-1. Read the complete plan or acceptance summary, affected flow, project
+1. Read the complete task record, implementation plan, affected flow, project
    instructions, and current diff.
-2. State the validation contract: acceptance criteria, commands, user flows, and
-   evidence required.
-3. Before choosing or writing the implementation, load and follow `ponytail` at
-   full intensity. This is required for every build, not optional.
-4. Load `pi-subagents` when delegation is useful:
-   - `scout`: fill a specific remaining code-context gap.
-   - `worker`: implement the approved scope as the sole writer.
-   - `researcher`: resolve an unexpected external API or platform question.
-   - `oracle`: advise when implementation exposes an unapproved architecture or
-     scope tradeoff.
-5. Prefer one async `worker` for non-trivial implementation. Pass it the
-   `ponytail` skill explicitly, plus the plan path, scope, non-goals, validation
-   contract, authority boundary, and required handoff. Every implementation and
-   fix worker must follow Ponytail. It must report changed files, commands and
-   exit codes, evidence, remaining work, and decisions needing approval.
-6. Keep writes single-threaded. Parallelize only read-only work unless writers
-   have intentionally isolated worktrees.
+2. State the validation contract: success criteria, commands, user flows,
+   required visual states, and evidence.
+3. Load and follow `ponytail` at full intensity.
+4. Use roles as needed:
+   - `scout`: fill a remaining code-context gap;
+   - `worker`: implement approved scope as the sole writer;
+   - `researcher`: resolve an external API or platform question;
+   - `oracle`: advise when implementation exposes an unapproved tradeoff;
+   - `reviewer`: independently check the implementation against the plan.
+5. Keep writes single-threaded unless writers intentionally use isolated
+   worktrees. The parent inspects all changes and keeps commit, scope, merge,
+   release, and product decisions.
 
-The parent inspects the worker's changes and remains responsible for decisions
-and commits. Do not let a child commit, push, merge, release, or expand scope.
+## Review and validation loop
 
-## Review loop
+Before UAT, use a fresh-context `reviewer` to check the diff against the
+implementation plan and success criteria. Add a specialist review when the
+change warrants it. Keep evidence-backed findings, send accepted fixes to the
+sole writer, and re-review only substantial or high-risk fixes.
 
-After implementation, use fresh-context `reviewer` agents when the change is
-non-trivial. Keep the fanout proportional:
+Run the narrowest useful checks after each logical slice and broader checks
+when warranted. Add focused tests for changed behavior, not trivial edits.
 
-- correctness and regressions;
-- tests and acceptance criteria;
-- simplicity and maintainability;
-- add security, accessibility, performance, or platform review only when
-  relevant.
+For every UI change, before entering UAT:
 
-The parent keeps evidence-backed findings, rejects noise, and sends accepted
-fixes to one worker. Re-review only substantial or high-risk fixes; stop instead
-of polishing indefinitely.
+1. Produce a fresh build from the current source.
+2. Install and launch it in the target environment.
+3. Reset or seed the exact state recorded in the plan.
+4. Navigate every changed state and capture clear screenshots.
+5. Compare the rendered app to the approved HTML mockup, fix meaningful
+   differences, and repeat this loop after each UI fix.
+6. Leave the fresh app open in the prepared state for the user.
 
-## Tests and commits
-
-- Run the narrowest useful check after each logical slice and broader checks when
-  warranted.
-- Add focused tests for changed behavior, not trivial edits or coverage theater.
-- The parent may commit completed non-UI slices with short imperative messages.
-- Leave UI implementation uncommitted until `uat-feature` records the user's
-  visual approval.
-- Never include credentials, generated junk, temporary reports, unrelated work,
-  or pre-existing changes.
+For iOS, use the project's Xcode scheme, the target simulator, and XCTest or
+XCUIAutomation where needed to reach the planned state. A passing test or
+Xcode build alone is not visual validation.
 
 ## Handoff
 
-When implementation and internal review are ready:
+When the review and validation loop is complete:
 
-1. Update validation evidence in the plan or acceptance summary.
-2. When a plan exists, set `Status: awaiting-uat`.
-3. Summarize what is ready and any known risks.
-4. Ask whether to continue to `uat-feature`.
+1. Record commands, results, state setup, screenshots, and limitations in
+   `plan.md`.
+2. Set the plan to `awaiting-uat`.
+3. Continue directly to `uat-feature`; do not ask whether to begin UAT.
 
-A passing build or reviewer result is not UAT or visual approval.
+A passing build, review, or internal visual comparison is not user approval.
