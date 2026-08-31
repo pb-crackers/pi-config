@@ -18,17 +18,19 @@ change. When a plan exists, set its status to `building` before implementation.
    instructions, and current diff.
 2. State the validation contract: acceptance criteria, commands, user flows, and
    evidence required.
-3. Load `ponytail` at full intensity.
+3. Before choosing or writing the implementation, load and follow `ponytail` at
+   full intensity. This is required for every build, not optional.
 4. Load `pi-subagents` when delegation is useful:
    - `scout`: fill a specific remaining code-context gap.
    - `worker`: implement the approved scope as the sole writer.
    - `researcher`: resolve an unexpected external API or platform question.
    - `oracle`: advise when implementation exposes an unapproved architecture or
      scope tradeoff.
-5. Prefer one async `worker` for non-trivial implementation. Give it the plan
-   path, scope, non-goals, validation contract, authority boundary, and required
-   handoff. It must report changed files, commands and exit codes, evidence,
-   remaining work, and decisions needing approval.
+5. Prefer one async `worker` for non-trivial implementation. Pass it the
+   `ponytail` skill explicitly, plus the plan path, scope, non-goals, validation
+   contract, authority boundary, and required handoff. Every implementation and
+   fix worker must follow Ponytail. It must report changed files, commands and
+   exit codes, evidence, remaining work, and decisions needing approval.
 6. Keep writes single-threaded. Parallelize only read-only work unless writers
    have intentionally isolated worktrees.
 
