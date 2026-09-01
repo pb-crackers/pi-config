@@ -33,8 +33,8 @@ Run `./verify.sh` at any time to check links, skills, and package versions. It w
 
 - `AGENTS.md` and `CHANGELOG.md`
 - Pi settings and model preferences
-- staged development workflow skills for todo capture, discussion, planning,
-  building, UAT, and shipping
+- staged development workflow skills for todo capture, debugging, discussion,
+  planning, building, UAT, and shipping
 - `supabase` and `supabase-postgres-best-practices` skills
 - Omarchy system theme
 - Pinned Pi package declarations
