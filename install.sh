@@ -26,7 +26,7 @@ link_config() {
 link_config "$ROOT/AGENTS.md" "$AGENT_DIR/AGENTS.md"
 link_config "$ROOT/settings.json" "$AGENT_DIR/settings.json"
 link_config "$ROOT/themes/omarchy-system.json" "$AGENT_DIR/themes/omarchy-system.json"
-for skill in dev-workflow capture-todo discuss-feature plan-feature build-feature uat-feature ship-feature supabase supabase-postgres-best-practices; do
+for skill in dev-workflow capture-todo debug-feature discuss-feature plan-feature build-feature uat-feature ship-feature supabase supabase-postgres-best-practices; do
   link_config "$ROOT/skills/$skill" "$AGENT_DIR/skills/$skill"
 done
 

@@ -40,6 +40,7 @@ session:
 | Task state | Skill |
 | --- | --- |
 | Capture a named idea and description | `../capture-todo/SKILL.md` |
+| Reported bug or `debugging` | `../debug-feature/SKILL.md` |
 | New, unclear, or `discussing` | `../discuss-feature/SKILL.md` |
 | `planning` | `../plan-feature/SKILL.md` |
 | `approved` or `building` | `../build-feature/SKILL.md` |
@@ -51,12 +52,13 @@ session:
 ## Gates
 
 1. Discussion → planning: confirm the brief, scope, and success criteria.
-2. Planning → build: approve the implementation plan and every UI mockup.
-3. Build → UAT: automatic after the required review and validation loop. For UI,
+2. Debugging → build: approve the root cause analysis and fix plan.
+3. Planning → build: approve the implementation plan and every UI mockup.
+4. Build → UAT: automatic after the required review and validation loop. For UI,
    UAT begins only with a fresh build installed, launched, and prepared in the
    required test state.
-4. UAT → ship: approve behavior and every changed visual state.
-5. Ship → merge or release: confirm authority not already granted.
+5. UAT → ship: approve behavior and every changed visual state.
+6. Ship → merge or release: confirm authority not already granted.
 
 On a later invocation, resume from `Status` rather than repeating completed
 work.

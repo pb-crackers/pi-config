@@ -1,20 +1,20 @@
 ---
 name: build-feature
 description: >
-  Implementation phase used by dev-workflow after an implementation plan is
-  approved. Builds the approved scope, reviews and fixes it, and always prepares
-  the current build for UAT.
+  Implementation phase used by dev-workflow after an implementation or debug
+  fix plan is approved. Builds the approved scope, reviews and fixes it, and
+  always prepares the current build for UAT.
 disable-model-invocation: true
 ---
 
 # Build Feature
 
-Require an approved implementation plan at `plans/<slug>/plan.md`. Set it to
-`building` before implementation.
+Require an approved implementation or debug fix plan at
+`plans/<slug>/plan.md`. Set it to `building` before implementation.
 
 ## Implement
 
-1. Read the complete task record, implementation plan, affected flow, project
+1. Read the complete task record, approved plan, affected flow, project
    instructions, and current diff.
 2. State the validation contract: success criteria, commands, user flows,
    required visual states, and evidence.
