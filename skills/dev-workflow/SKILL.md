@@ -18,14 +18,44 @@ user questions, and final verification.
 2. Preserve uncommitted work. Never stash, discard, reset, or overwrite it
    without permission.
 3. Load and follow `ponytail` at full intensity for code changes.
-4. Identify the task from the request, `TODO.md`, and linked task records.
+4. Resolve the product backlog from `plans/TODO.md`, then identify the task
+   from the request, backlog, and linked task records.
 5. Before the first repository edit, create or reuse a non-default feature
    branch. Ask first when the working tree makes branching unsafe.
 
+## Product backlog
+
+Use `plans/TODO.md` as the project-local pointer to the product backlog:
+
+```markdown
+# Product backlog
+
+Source: `/absolute/path/to/Obsidian/Project-Features.md`
+```
+
+Resolve it as follows:
+
+1. If `Source` exists, use that file for bugs, feature ideas, roadmap, and
+   status. If the target file is missing, create its parent directory and file.
+2. If there is no pointer, find Obsidian vaults by searching the platform's
+   standard Obsidian documents location for `.obsidian` directories.
+3. When exactly one vault is available, reuse a project folder matching the
+   repository name or create one, create `<Project>-Features.md`, and write its
+   absolute path into `plans/TODO.md`.
+4. When vault or project matches are ambiguous, ask the user instead of
+   guessing. If no Obsidian vault exists, keep using the repository TODO unless
+   the user chooses another location.
+5. Before converting a populated repository TODO into a pointer, reconcile
+   every existing item into the external backlog. Never silently drop entries.
+
+Use these headings in a newly created backlog: `Bugs`, `Feature Ideas`,
+`Brain Dump`, `Roadmap`, and `Shipped Features`. Preserve a user's existing
+organization when it already covers those purposes.
+
 ## Task records
 
-Keep `TODO.md` as a short index and create one task record at
-`plans/<slug>/plan.md` when discussion begins. Every work item that reaches
+Create one task record at `plans/<slug>/plan.md` when discussion begins and
+link it from the resolved product backlog. Every work item that reaches
 planning, build, or UAT requires this record.
 
 `plan.md` is the source of truth for the brief, success criteria, decisions,

@@ -25,7 +25,7 @@ The parent owns user-facing decisions. Do not implement during this phase.
 
 ## Record
 
-Create `plans/<slug>/plan.md` and link it from `TODO.md`. Record:
+Create `plans/<slug>/plan.md` and link it from the product backlog resolved by `dev-workflow`. Record:
 
 ```markdown
 # Feature name

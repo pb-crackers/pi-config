@@ -10,7 +10,8 @@ disable-model-invocation: true
 
 Do not edit product code, commit, or begin Build during this phase. Set an
 existing task record to `Status: debugging`. If none exists, create
-`plans/<slug>/plan.md`, link it from `TODO.md`, and record the bug report.
+`plans/<slug>/plan.md`, link it from the product backlog resolved by
+`dev-workflow`, and record the bug report.
 
 ## Report
 

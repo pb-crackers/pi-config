@@ -24,13 +24,10 @@ name; do not make the user provide one.
 
 ## Record
 
-Reuse the project's existing task system. Otherwise create `TODO.md` with:
+Resolve the product backlog through `plans/TODO.md` as defined by
+`dev-workflow`. Record the item under `Feature Ideas` or `Bugs`:
 
 ```markdown
-# TODO
-
-## Needs discussion
-
 - [ ] **Offline mode** (`offline-mode`) — Let users access saved content without a connection.
 ```
 
