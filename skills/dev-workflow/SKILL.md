@@ -3,7 +3,7 @@ name: dev-workflow
 description: >
   Parent-controlled workflow for discussing, planning, building, validating,
   and shipping development work. Preserves task records, prepares UI for direct
-  user testing, and requires approval at product, plan, UAT, and release gates.
+  user testing, and requires approval at product, plan, and UAT gates.
 ---
 
 # Development Workflow
@@ -88,9 +88,12 @@ session:
 3. Planning → build: approve the implementation plan and every UI mockup.
 4. Build → UAT: automatic after review and validation. Build owns internal
    checks; UAT owns presenting the current candidate ready for user testing.
-5. UAT → ship: approve behavior and every changed visual state.
-6. Ship → merge: follow the authority and project-defined headless gate recorded
-   in `ship-feature`; release or deployment still requires separate authority.
+5. UAT → ship: approval of behavior and every changed visual state also grants
+   authority to commit, run the project-defined headless gate, push, open a pull
+   request, and merge it. Continue directly to `ship-feature` without asking.
+6. Ship → merge: automatic after the local gate and required remote checks pass.
+   Ask only when blocked or when separate release or deployment authority is
+   required.
 
 On a later invocation, resume from `Status` rather than repeating completed
 work.

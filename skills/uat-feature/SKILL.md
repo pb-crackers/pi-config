@@ -31,12 +31,14 @@ practical. Present every criterion with its evidence, the captured screenshots,
 and the running app. Ask the user to approve, request changes, or state that
 they cannot verify it. A build, test, review, or screenshot is not approval.
 
-- If approved, record approval and set `Status: approved-to-ship`.
+- If approved, record approval, set `Status: approved-to-ship`, immediately load
+  `ship-feature`, and complete shipping through merge without another question.
 - If changes are requested, record the failed criterion, set `Status: building`,
   return to `build-feature`, and repeat validation and UAT.
 - If the user cannot verify required behavior, remain `awaiting-uat` and report
   the blocker.
 
-Ask whether to continue to `ship-feature` only after all required behavior and
-visual states are approved. Do not commit, push, open a pull request, merge, or
-run shipping-only gates during UAT.
+UAT approval grants authority to commit, run the project-defined shipping gate,
+push, open a pull request, and merge after required checks pass. Those actions
+belong to `ship-feature`, not UAT. Ask again only for a blocker, failed gate, or
+separate release or deployment.
