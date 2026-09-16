@@ -1,31 +1,32 @@
 ---
 name: discuss-feature
 description: >
-  Discussion phase used by dev-workflow for new or unclear work. Defines the
-  product brief, success criteria, and visual states before implementation
-  planning.
+  Discussion phase used by dev-workflow for intentionally started new or
+  unclear work. Defines the product brief, success criteria, and visual states
+  before implementation planning.
 disable-model-invocation: true
 ---
 
 # Discuss Feature
 
-The parent owns user-facing decisions. Do not implement during this phase.
+Use only after `dev-workflow` intentionally enters tracked work. An ordinary
+question or brainstorming request does not create a task record. The parent
+owns user-facing decisions; do not implement during this phase.
 
 ## Understand
 
-1. Read the request, project instructions, existing task records, and relevant
-   code.
-2. Use roles as needed:
-   - `scout`: map current behavior, affected flows, conventions, and tests;
-   - `researcher`: consult authoritative sources when external behavior matters;
-   - `oracle`: challenge a material product or architecture tradeoff;
-   - `reviewer`: critique a risky or broad brief.
+1. Read the request, project instructions, Obsidian feature index and task
+   record, and relevant code.
+2. Use a subagent only for a concrete context gap or material independent
+   challenge that should save time.
 3. Read load-bearing files, resolve conflicting evidence, and ask only the
    remaining product, scope, naming, risk, or visual questions.
 
 ## Record
 
-Create `plans/<slug>/plan.md` and link it from the product backlog resolved by `dev-workflow`. Record:
+Create or update `<project>/Tasks/<slug>.md` through `dev-workflow` and link it
+from the Obsidian feature index. When offline, queue both mutations in
+`OBSIDIAN_OUTBOX.md`. Record:
 
 ```markdown
 # Feature name
@@ -53,13 +54,13 @@ Created: YYYY-MM-DD
 - Changelog:
 ```
 
-Keep the brief about outcomes and constraints, not implementation details.
-When discussion starts from a captured todo, preserve its description.
+Keep the brief about outcomes and constraints, not implementation details. When
+discussion starts from a captured item, preserve its description.
 
 ## Planning gate
 
-Present the outcome, scope, success criteria, and visual states. Ask whether
-the user approves the brief for planning.
+Present the outcome, scope, success criteria, and visual states. Ask whether the
+user approves the brief for planning.
 
 - On approval, set `Status: planning` and continue to `plan-feature`.
 - On requested changes, revise the brief and ask again.

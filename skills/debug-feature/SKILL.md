@@ -8,10 +8,10 @@ disable-model-invocation: true
 
 # Debug Feature
 
-Do not edit product code, commit, or begin Build during this phase. Set an
-existing task record to `Status: debugging`. If none exists, create
-`plans/<slug>/plan.md`, link it from the product backlog resolved by
-`dev-workflow`, and record the bug report.
+Do not edit product code, commit, or begin Build during this phase. Set the
+Obsidian task record to `Status: debugging`. If none exists, create
+`<project>/Tasks/<slug>.md`, link it from the feature index, or queue both
+mutations in `OBSIDIAN_OUTBOX.md` when offline.
 
 ## Report
 
@@ -24,14 +24,15 @@ Ask only for missing information:
 ## Investigate
 
 1. Reproduce the bug when practical.
-2. Use `scout` to trace the relevant flow and likely shared code.
+2. Trace the relevant flow directly. Use `scout` only when a broader independent
+   trace should save time.
 3. Use `researcher`, `oracle`, or `reviewer` only when an external behavior,
-   competing explanation, or risk needs resolution.
+   competing explanation, or material risk needs resolution.
 4. Do not claim a root cause without evidence.
 
 ## Record
 
-Add or update this section in `plan.md`:
+Add or update this section in the task record:
 
 ```markdown
 ## Debug
@@ -48,9 +49,9 @@ Add or update this section in `plan.md`:
 - Validation:
 ```
 
-Keep the fix plan within the approved bug scope. It must include a check that
-proves the bug is fixed. For UI bugs, include the required user-facing state
-and visual validation.
+Keep the fix within the reported scope and include a check that proves the bug
+is fixed. For UI bugs, include the required user-facing state and visual
+validation.
 
 ## Approval gate
 
@@ -60,4 +61,4 @@ Build.
 - On approval, set `Status: approved` and continue to `build-feature`.
 - On requested changes or unresolved evidence, remain `debugging`.
 
-Build owns the implementation worker, review, fresh build, and UAT.
+Build owns implementation, review, fresh-build validation, and UAT handoff.
