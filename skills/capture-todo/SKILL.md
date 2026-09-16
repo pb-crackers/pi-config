@@ -2,14 +2,14 @@
 name: capture-todo
 description: >
   Todo intake phase used by dev-workflow. Accepts a required name and
-  description, creates or reuses the project's todo index, and records a
-  concise undiscussed item without prematurely creating a feature plan.
+  description and records a concise undiscussed item in the project's Obsidian
+  feature index.
 disable-model-invocation: true
 ---
 
 # Capture Todo
 
-Use this when the user wants to record an idea or task without discussing or
+Use this when the user wants to record an idea or bug without discussing or
 building it yet.
 
 ## Input
@@ -24,28 +24,22 @@ name; do not make the user provide one.
 
 ## Record
 
-Reuse the project's existing task system. Otherwise create `TODO.md` with:
+Resolve the Obsidian feature index through `dev-workflow`. Record the item under
+`Feature Ideas` or `Bugs`:
 
 ```markdown
-# TODO
-
-## Needs discussion
-
 - [ ] **Offline mode** (`offline-mode`) — Let users access saved content without a connection.
 ```
 
-Keep each item on one line. Preserve the user's meaning while collapsing
-multiline descriptions into a concise paragraph. Do not create a plan yet.
+When the vault is unavailable, queue the complete update in
+`OBSIDIAN_OUTBOX.md`. Keep each item on one line and preserve the user's meaning.
+Do not create a task record yet.
 
 If the slug already exists, show the existing entry and ask whether to update
 its name or description; never add a silent duplicate.
 
 ## Finish
 
-Show the exact recorded entry. If the user already asked to persist it, commit
-and push within that authority; otherwise ask once before those Git actions.
-When the item is later discussed, `discuss-feature` creates its plan, carries the
-description forward, and replaces the plain entry with a plan link.
-
-Todo capture does not require implementation, UAT, a changelog entry, or
-subagents.
+Show the exact recorded or queued entry. If the user already authorized a
+commit or push, act within that authority; otherwise ask once. Todo capture does
+not require implementation, UAT, a changelog entry, or subagents.

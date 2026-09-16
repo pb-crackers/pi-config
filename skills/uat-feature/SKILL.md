@@ -1,46 +1,42 @@
 ---
 name: uat-feature
 description: >
-  User acceptance phase used by dev-workflow after Build has prepared a fresh
-  validated build. Presents the app in its required test state, records user
+  User acceptance phase used by dev-workflow after Build validates the current
+  candidate. Presents it in Device Hub in the required state, records user
   approval, and returns failed work to implementation.
 disable-model-invocation: true
 ---
 
 # UAT Feature
 
-Require `plans/<slug>/plan.md` with `Status: awaiting-uat`. The parent owns
-product operation, evidence collection, and user questions.
+Require an Obsidian task record with `Status: awaiting-uat`. The parent owns the
+running app, evidence, and user questions.
 
-## Validate
+## Prepare
 
-1. Confirm Build recorded the fresh build, target environment, state setup,
-   commands, and required visual states.
-2. Exercise each success criterion through the real user-facing path where
-   practical, not only tests or code inspection.
-3. Use roles as needed:
-   - specialist `reviewer`: inspect a specific SwiftUI, accessibility, security,
-     or platform concern;
-   - `researcher` or `oracle`: resolve an unexpected external or technical
-     question without making product decisions.
-4. Subagents provide evidence only. Route every fix through `build-feature`.
+1. Confirm Build recorded the candidate build, source revision, target
+   simulator, state setup, commands, and required visual states.
+2. Confirm the candidate still matches current source. If the prepared session
+   is missing or stale, rebuild as needed, install, and launch the target
+   simulator in Device Hub.
+3. Configure device conditions in Device Hub. Prepare app state through the
+   project's existing runtime seed or automation mechanism, or the normal user
+   path. Do not alter product source merely to stage UAT.
+4. Leave the app open at the first required test state.
 
-## Visual and acceptance gate
+## Acceptance gate
 
-For UI work, the fresh app must already be open in the planned state. Present
-the captured screenshots and the running app, then ask the user to approve,
-request changes, or state that they cannot verify it. Do not treat a build,
-test, or screenshot as user approval.
+Exercise each success criterion through the real user-facing path where
+practical. Present every criterion with its evidence, the captured screenshots,
+and the running app. Ask the user to approve, request changes, or state that
+they cannot verify it. A build, test, review, or screenshot is not approval.
 
-Present every success criterion with its evidence and ask the user to confirm
-the expected behavior.
-
-- If approved, record approval and set the plan to `approved-to-ship`.
-- If changes are requested, record the failed criterion, set the plan to
-  `building`, return to `build-feature`, and repeat its review and UI
-  validation loop.
-- If the user cannot verify required behavior, leave the plan at `awaiting-uat`
-  and report the blocker.
+- If approved, record approval and set `Status: approved-to-ship`.
+- If changes are requested, record the failed criterion, set `Status: building`,
+  return to `build-feature`, and repeat validation and UAT.
+- If the user cannot verify required behavior, remain `awaiting-uat` and report
+  the blocker.
 
 Ask whether to continue to `ship-feature` only after all required behavior and
-visual states are approved.
+visual states are approved. Do not commit, push, open a pull request, merge, or
+run shipping-only gates during UAT.

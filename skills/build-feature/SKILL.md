@@ -2,64 +2,62 @@
 name: build-feature
 description: >
   Implementation phase used by dev-workflow after an implementation or debug
-  fix plan is approved. Builds the approved scope, reviews and fixes it, and
-  always prepares the current build for UAT.
+  fix plan is approved. Builds the approved scope, reviews and validates it,
+  and prepares the current candidate for UAT.
 disable-model-invocation: true
 ---
 
 # Build Feature
 
-Require an approved implementation or debug fix plan at
-`plans/<slug>/plan.md`. Set it to `building` before implementation.
+Require an approved Obsidian implementation or debug plan. Set it to `building`
+before implementation.
 
 ## Implement
 
 1. Read the complete task record, approved plan, affected flow, project
    instructions, and current diff.
-2. State the validation contract: success criteria, commands, user flows,
+2. For UI work, open every approved repository mockup linked from the task
+   record and give those paths to any implementing writer.
+3. State the validation contract: success criteria, commands, user flows,
    required visual states, and evidence.
-3. Load and follow `ponytail` at full intensity.
-4. Use roles as needed:
-   - `scout`: fill a remaining code-context gap;
-   - `worker`: implement approved scope as the sole writer;
-   - `researcher`: resolve an external API or platform question;
-   - `oracle`: advise when implementation exposes an unapproved tradeoff;
-   - `reviewer`: independently check the implementation against the plan.
-5. Keep writes single-threaded unless writers intentionally use isolated
-   worktrees. The parent inspects all changes and keeps commit, scope, merge,
-   release, and product decisions.
+4. Load and follow `ponytail` at full intensity.
+5. Use a writer only when delegation should save time. Every implementation or
+   review-fix writer prompt must explicitly require that child to load and
+   follow `ponytail` at full intensity in its own context.
+6. Keep writes single-threaded unless independent writers intentionally use
+   isolated worktrees. The parent owns scope, decisions, verification, and Git
+   operations.
 
-## Review and validation loop
+## Review and validation
 
-Before UAT, use a fresh-context `reviewer` to check the diff against the
-implementation plan and success criteria. Add a specialist review when the
-change warrants it. Keep evidence-backed findings, send accepted fixes to the
-sole writer, and re-review only substantial or high-risk fixes.
+Use a fresh-context reviewer before UAT when independent review is useful. Add a
+specialist review only for a specific concern. Route accepted fixes through the
+sole writer and re-review only substantial or high-risk fixes.
 
-Run the narrowest useful checks after each logical slice and broader checks
-when warranted. Add focused tests for changed behavior, not trivial edits.
+Run focused checks after logical slices and broader project-defined checks when
+warranted. Keep builds and tests headless when interaction is unnecessary.
 
-For every UI change, before entering UAT:
+For every UI change:
 
-1. Produce a fresh build from the current source.
-2. Install and launch it in the target environment.
-3. Reset or seed the exact state recorded in the plan.
-4. Navigate every changed state and capture clear screenshots.
-5. Compare the rendered app to the approved HTML mockup, fix meaningful
-   differences, and repeat this loop after each UI fix.
-6. Leave the fresh app open in the prepared state for the user.
+1. Produce a fresh build from current source.
+2. Install and launch it in the target simulator, using Device Hub for
+   interactive simulator validation.
+3. Configure device conditions such as appearance, text size, accessibility,
+   location, and orientation in Device Hub.
+4. Prepare app data with an existing launch argument, environment variable,
+   fixture, debug seed path, UI automation, or the normal user path.
+5. Navigate every changed state, capture screenshots, and compare them with the
+   approved mockup. Fix meaningful differences and repeat after UI fixes.
 
-For iOS, use the project's Xcode scheme, the target simulator, and XCTest or
-XCUIAutomation where needed to reach the planned state. A passing test or
-Xcode build alone is not visual validation.
+Never edit product source or create alternate product behavior solely to force
+a UAT state. Propose reusable debug-only seed support as separate approved scope
+when repeated setup justifies it.
 
 ## Handoff
 
-When the review and validation loop is complete:
-
-1. Record commands, results, state setup, screenshots, and limitations in
-   `plan.md`.
-2. Set the plan to `awaiting-uat`.
+1. Record commands, results, candidate build, simulator, state setup,
+   screenshots, and limitations in the Obsidian task record or outbox.
+2. Set the task to `awaiting-uat`.
 3. Continue directly to `uat-feature`; do not ask whether to begin UAT.
 
-A passing build, review, or internal visual comparison is not user approval.
+Build validation is evidence, not user approval.
