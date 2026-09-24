@@ -19,8 +19,15 @@ record and repository mockups only; do not modify product code.
 2. Use a subagent only for a concrete context gap, external question, material
    tradeoff, or independent plan review that should save time.
 3. Map every success criterion to affected code or data flow, implementation
-   slices, checks, and evidence.
-4. Record the target environment, setup or seed data, user path, and screenshots
+   slices, checks, and evidence. Trace callers, consumers, data contracts, and
+   other dependent behavior before changing or removing anything; include
+   necessary follow-up changes and checks. Raise material impacts or scope
+   decisions with the user before approval.
+4. For new code, follow established project conventions. In a greenfield project,
+   choose simple, consistent API names and request/response/error shapes before
+   the first endpoint; define how failures are validated, reported, and shown
+   to users. Do not copy inconsistent legacy patterns without questioning them.
+5. Record the target environment, setup or seed data, user path, and screenshots
    required for validation. Resolve unknowns now; return to discussion when a
    product or scope decision remains.
 
@@ -51,7 +58,7 @@ approved visual target; a fresh simulator render remains final proof.
 
 Add an `## Implementation plan` section to the task record containing:
 
-- affected flows and files;
+- affected flows and files, dependent behavior, and required follow-up changes;
 - ordered implementation slices;
 - success-criterion-to-validation mapping;
 - validation commands, target environment, state setup, and visual states;
