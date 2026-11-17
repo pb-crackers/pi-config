@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Research reusable solutions and clarify requirements before choosing a build approach.
+- Track larger features as dependent Obsidian tickets with whole-feature validation.
+- Reassess QA failures and dependent flows before patching; keep autonomous retries
+  within approved scope until explicit user acceptance.
+- Isolate task edits in owned worktrees and clean them up safely after merge.
+- Use the Obsidian Sync vault at `~/obsidian-vault/notes-synced/` for task records.
+
 - Added a root-cause-analysis and fix-planning workflow for reported bugs.
 - Added a planning phase with task records and HTML UI mockups.
 - Require Build to review, fresh-build, install, launch, and prepare UI changes

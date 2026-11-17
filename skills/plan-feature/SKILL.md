@@ -4,7 +4,6 @@ description: >
   Implementation-planning phase used by dev-workflow after a feature brief is
   complete. Maps approved success criteria to code changes, validation, and UI
   mockups before implementation begins.
-disable-model-invocation: true
 ---
 
 # Plan Feature
@@ -30,6 +29,22 @@ record and repository mockups only; do not modify product code.
 5. Record the target environment, setup or seed data, user path, and screenshots
    required for validation. Resolve unknowns now; return to discussion when a
    product or scope decision remains.
+
+## Reuse and decomposition
+
+Read the discussion's research and verify the selected approach against current
+primary sources before relying on unfamiliar APIs, libraries, or platform
+behaviour. Check compatibility and integration cost; record the reuse/custom
+decision and citations in the task. Research missing facts now. If an assumption
+fails, reconsider the approach before elaborating the implementation. Return
+product decisions to discussion; do not quietly expand the approved scope.
+
+For work too large for one bounded implementation session or with distinct
+dependencies, load `../ticket-feature/SKILL.md` to create or revise Obsidian
+implementation tickets. Keep trivial work in the parent record. Include ticket
+coverage, dependencies, and final integration checks in the existing plan gate;
+do not add another approval gate. During recovery, read the diagnosis, revise
+only affected plans/tickets, and invalidate stale validation evidence.
 
 ## UI design and mockups
 
@@ -60,6 +75,7 @@ Add an `## Implementation plan` section to the task record containing:
 
 - affected flows and files, dependent behavior, and required follow-up changes;
 - ordered implementation slices;
+- reuse decision and cited research, linked tickets and their blocking edges;
 - success-criterion-to-validation mapping;
 - validation commands, target environment, state setup, and visual states;
 - linked mockups, risks, and decisions.

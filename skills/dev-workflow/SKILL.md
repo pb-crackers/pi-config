@@ -4,13 +4,16 @@ description: >
   Parent-controlled workflow for discussing, planning, building, validating,
   and shipping development work. Preserves task records, prepares UI for direct
   user testing, and supports --auto for autonomous plan/build/test iteration.
-  Requires approval at product and UAT gates, and at plan gates by default.
+  Researches reuse, tracks larger work as dependent tickets, isolates edits in
+  worktrees, and reassesses failures. Requires product and UAT approval, and
+  plan approval by default.
 ---
 
 # Development Workflow
 
 Load only the active phase skill. The parent owns decisions, user questions,
 record reconciliation, and final verification.
+Load supporting skills only when the active phase requires them.
 
 ## Intent gate
 
@@ -26,10 +29,44 @@ After work is requested:
    and existing conventions.
 2. Preserve uncommitted work. Never stash, discard, reset, or overwrite it
    without permission.
-3. Resolve the project's Obsidian records and reconcile its outbox.
-4. Before the first repository edit, create or reuse a non-default feature
-   branch. Ask first when the working tree makes branching unsafe.
-5. Load and follow `ponytail` at full intensity for code changes.
+3. Identify the canonical repository and locate existing task records and their
+   recorded working copy. Use Git's common directory/worktree inventory when
+   starting from a linked worktree; do not mistake its task directory for a new
+   project.
+4. Before repository edits, including an outbox write, create or resume the task's dedicated worktree and
+   non-default feature branch using the working-copy rules below. Never switch
+   branches in another task's checkout.
+5. Resolve the project's Obsidian records and reconcile the task's outbox.
+6. Load and follow `ponytail` at full intensity for code changes.
+
+## Working copies
+
+For new repository-editing work, create a dedicated Git worktree and feature
+branch from the intended base. Ordinary questions and read-only exploration do
+not need one. Resume a recorded task in its existing worktree; do not nest a new
+worktree on every invocation or phase transition. If the task depends on dirty
+work elsewhere, identify that dependency and preserve it; do not silently omit,
+copy, stash, reset, or commit it. Resolve an unsafe dependency with the user.
+
+Record the canonical repository, base revision, absolute worktree path, branch,
+and creation ownership. Check the path and branch before writes and Git actions.
+Compare resolved paths so filesystem aliases do not create duplicate worktrees.
+Use one writer per worktree; independent implementation writers need separate
+owned worktrees. The parent integrates and verifies their changes. Worktrees
+isolate files and branch checkouts, not databases, ports, or shared services:
+use project-supported setup and isolated runtime resources when needed. Keep
+secrets out of task records; preserve required ignored configuration and assets.
+
+Keep the worktree through review and UAT. After confirmed merge, preserve
+needed evidence and assets, confirm no process or agent still owns it, and
+leave its directory before cleanup. Check tracked, untracked, and ignored work
+and unmerged commits. Verify preservation against the recorded merged PR and
+commits, including squash/rebase merges; ancestry alone is insufficient there.
+If preservation is uncertain, retain the worktree and report what remains.
+Remove only safe, task-owned worktrees with ordinary `git worktree remove`,
+never force. Remove only owned local branches whose work is confirmed preserved;
+never delete a default or another task's branch. Cleanup failure is recorded as
+pending cleanup, not hidden behind a claim that all work is finished.
 
 ## Autonomous mode (`--auto`)
 
@@ -44,13 +81,15 @@ the user disables it; omission on resume does not revoke it. The user can say
 "turn off auto" to restore normal gates for subsequent transitions.
 
 After the product brief, scope, and success criteria are confirmed, `--auto`
-preauthorizes implementation plans, debug fix plans, UI mockups, and revisions
-within that scope. Record each plan and its authorization as `--auto`, never as
+preauthorizes implementation plans, ticket breakdowns, debug fix plans, UI
+mockups, and revisions within that scope. Record each plan and its authorization as `--auto`, never as
 user review or acceptance. This rule applies to the phase skills below.
 
-Loop through planning or diagnosis, implementation, review, and validation as
-many times as needed. Fix failures, revise the plan when evidence requires it,
-and rerun affected checks without asking for renewed plan approval. Keep the
+Work ready tickets in dependency order, then verify the whole feature. Loop
+through planning or diagnosis, targeted research, implementation, review, and
+validation as many times as needed. Route failures through the recovery rules
+below before editing, revise affected plans and tickets when evidence requires
+it, and rerun checks without renewed plan approval within scope. Keep the
 task record current and report meaningful progress. Do not lower success
 criteria, skip required checks, or expand scope to make validation pass.
 
@@ -67,37 +106,76 @@ and shipping rules still apply.
 ## Obsidian records
 
 Obsidian is the primary source for backlogs, bugs, roadmaps, task records, and
-shipped logs.
+completion logs.
 
-1. Inspect direct children of the platform's standard Obsidian documents
-   location for `.obsidian`; do not recursively scan all iCloud files. Ask when
-   multiple vaults are available.
-2. Derive a lowercase kebab-case project slug from the repository directory,
-   treating each run of non-alphanumeric characters as one hyphen.
+1. Use the active Obsidian Sync vault at
+   `/Users/phillipdougherty/obsidian-vault/notes-synced/`. A backup or the former
+   iCloud vault is not an alternative working vault. If this path is unavailable,
+   use the outbox below; do not silently write to another vault. Change the
+   location only when the user supplies a new one. Existing records outside it
+   require explicit migration scope; do not bulk-migrate them during a feature.
+2. Derive a lowercase kebab-case project slug from the canonical repository
+   directory, treating each run of non-alphanumeric characters as one hyphen.
+   In a worktree, use the recorded original repository identity, not the task
+   directory name. Reuse the project's existing records across all worktrees.
 3. Compare existing top-level project folders by normalized slug. Reuse the one
    matching folder; ask if multiple folders match. Otherwise create `<slug>/`.
 4. Reuse the folder's single `*-Features.md`, or create
    `<slug>/<slug>-Features.md` with `Bugs`, `Feature Ideas`, `Improvements`,
-   `Brain Dump`, `Roadmap`, and `Shipped Features` headings.
+   `Brain Dump`, and `Roadmap` headings. Keep this index for open work only.
 5. Store task records at `<slug>/Tasks/<task-slug>.md` and link them from the
    feature index. Repository TODO and Markdown plan files are legacy history,
    not writable workflow sources.
+6. Store completed bugs in `<slug>/bugs-log.md` and completed features and
+   improvements in `<slug>/implementation-log.md`. Each entry links to its task
+   record and includes the completion date and PR when available. Move completed
+   entries out of the feature index after merge; keep full details in task records.
+   If the current task has a legacy `Shipped Features` entry, move only that
+   entry to its log. Leave unrelated history and broader vault migration for
+   separately requested work.
 
-When the vault is unavailable, append every intended mutation to repository-root
-`OBSIDIAN_OUTBOX.md`. Each entry must include a timestamp, target vault-relative
+When the vault is unavailable, append every intended mutation to
+`OBSIDIAN_OUTBOX.md` at the root of the active task's worktree. Each entry must
+include a timestamp, target vault-relative
 path, operation, and complete content. This file is a sync queue, not a second
 backlog.
 
-Whenever access returns, reconcile the outbox before other planning work. Apply
-entries in order, preserve both versions and ask when a conflict cannot be
+On resume, find the task's recorded worktree and its outbox before creating new
+records. Whenever access returns, reconcile known task outboxes before other
+planning work. Apply entries in order, preserve both versions and ask when a conflict cannot be
 merged safely, then delete the outbox after every entry is applied.
 
 ## Task records
 
 Create one task record when intentional discussion begins. It is the source of
 truth for the brief, success criteria, decisions, implementation plan,
-validation, approvals, and completion evidence. Keep HTML mockups in the
+validation, approvals, and completion evidence. Record execution mode, working
+copy identity, research decisions, and links to child decision/implementation
+tickets when needed. Keep HTML mockups in the
 repository at `mockups/<task-slug>/` and link them from the task record.
+
+Use `ticket-feature` during planning when work needs multiple bounded pieces;
+small tasks stay in one record. Child tickets live under
+`<slug>/Tasks/<task-slug>/` and belong to the parent, not separate feature-index
+entries. Track acceptance criteria, dependencies, status, and evidence. A ticket
+is ready only when its blockers pass. On resume, use recorded ticket state;
+ticket completion never replaces whole-feature validation or user acceptance.
+
+## Failure recovery
+
+For a failed required check, accepted review finding, or reported UAT failure,
+record the symptom and failed criterion before changing code. Set
+`Status: debugging` and load `debug-feature` to trace cause and impact. A clear
+local defect may need only a short diagnosis; failures across flows, repeated
+unsuccessful fixes, or contradicted assumptions require broader reassessment.
+If no new evidence or viable approach remains, report the blocker.
+
+Diagnosis routes to a bounded fix, revised planning/research, or discussion for
+changed requirements. Reopen affected tickets and dependent validation; preserve
+useful work and evidence rather than resetting the feature. Neither a requested
+UAT fix nor `--auto` permits unrelated changes or new product scope. A stale
+candidate or missing test environment requires preparation/revalidation; it is
+not by itself evidence of a product defect.
 
 ## Routing
 
@@ -109,11 +187,17 @@ session:
 | Capture a named idea and description | `../capture-todo/SKILL.md` |
 | Reported bug or `debugging` | `../debug-feature/SKILL.md` |
 | New, unclear, or `discussing` | `../discuss-feature/SKILL.md` |
-| `planning` | `../plan-feature/SKILL.md` |
+| `planning` | `../plan-feature/SKILL.md` (loads `../ticket-feature/SKILL.md` for larger work) |
 | `approved` or `building` | `../build-feature/SKILL.md` |
 | `awaiting-uat` | `../uat-feature/SKILL.md` |
 | `approved-to-ship`, `shipping`, or `awaiting-merge` | `../ship-feature/SKILL.md` |
-| `done` | Report the recorded outcome; do not restart work |
+| `done` | Report the recorded outcome; finish recorded pending cleanup when safe, without restarting implementation |
+
+For Apple UI work requiring device verification, Build loads the installed
+`xcode-device-interaction` skill and owns automated runtime checks. UAT
+inherits the verified candidate and evidence, loading the device skill again
+only when interaction is needed. The parent can use it directly; delegation is
+optional. UAT still requires the user's acceptance.
 
 ## Gates
 
@@ -143,7 +227,9 @@ slice, external question, or independent review that should reduce elapsed time.
 Parallelize only independent bounded work. Do not launch subagents for simple
 questions or ordinary discussion.
 
-Load and follow `pi-subagents` when delegating. Keep one writer per worktree,
+When delegating, load `pi-subagents` if available; otherwise use the current
+environment's supported subagent tools and these ownership rules. Keep one
+writer per worktree,
 do not let ordinary children launch subagents, and give each child a bounded
 assignment. Every implementation or review-fix writer must be explicitly told
 to load and follow `ponytail` at full intensity in its own context.
