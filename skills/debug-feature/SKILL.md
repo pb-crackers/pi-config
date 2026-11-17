@@ -55,8 +55,13 @@ validation.
 
 ## Approval gate
 
-Present the root cause analysis and fix plan. Ask whether to approve it for
-Build.
+When the task has active `--auto` authorization under `dev-workflow`, record the
+evidence-backed root cause analysis and fix plan as authorized by `--auto`, set
+`Status: approved`, and continue directly to `build-feature` within the confirmed
+scope. Unresolved evidence requires more investigation or a blocker report.
+
+Otherwise, present the root cause analysis and fix plan. Ask whether to approve
+it for Build.
 
 - On approval, set `Status: approved` and continue to `build-feature`.
 - On requested changes or unresolved evidence, remain `debugging`.
