@@ -64,6 +64,11 @@ Add an `## Implementation plan` section to the task record containing:
 - validation commands, target environment, state setup, and visual states;
 - linked mockups, risks, and decisions.
 
-Present the implementation plan and every UI mockup. On approval, set
+When the task has active `--auto` authorization under `dev-workflow`, record the
+plan and every UI mockup as authorized by `--auto`, set `Status: approved`, and
+continue directly to `build-feature`. Revisions within the confirmed scope use
+the same authorization; unresolved product or scope decisions still need the user.
+
+Otherwise, present the implementation plan and every UI mockup. On approval, set
 `Status: approved`. On requested changes, remain `planning`. Do not implement
 until approved.

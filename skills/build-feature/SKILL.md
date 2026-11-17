@@ -10,7 +10,8 @@ disable-model-invocation: true
 # Build Feature
 
 Require an approved Obsidian implementation or debug plan. Set it to `building`
-before implementation.
+before implementation. Recorded `--auto` authorization under `dev-workflow`
+satisfies plan approval within the confirmed scope.
 
 ## Implement
 
@@ -44,6 +45,14 @@ sole writer and re-review only substantial or high-risk fixes.
 
 Run focused checks after logical slices and broader project-defined checks when
 warranted. Keep builds and tests headless when interaction is unnecessary.
+
+With active `--auto` authorization, fix review findings and validation failures
+and rerun affected checks until the success criteria and required checks pass.
+When the implementation or diagnosis needs revision, record it and return to
+`plan-feature` (`Status: planning`) or `debug-feature` (`Status: debugging`),
+then continue Build under the same authorization. Follow `dev-workflow`'s scope
+and stopping rules; do not hand off failed or incomplete validation as ready
+for UAT. User acceptance remains required after the loop succeeds.
 
 For iOS UI changes, create a fresh, dedicated simulator with a task-specific
 name and the required device/runtime. Record its device ID; never use a shared
