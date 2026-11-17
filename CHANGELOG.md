@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added Unslop as a UI craft review during Build, preserving approved designs,
+  native patterns and accessibility, with fresh validation after cleanup.
+
 - Research reusable solutions and clarify requirements before choosing a build approach.
 - Track larger features as dependent Obsidian tickets with whole-feature validation.
 - Reassess QA failures and dependent flows before patching; keep autonomous retries
