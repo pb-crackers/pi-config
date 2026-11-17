@@ -17,7 +17,8 @@ satisfies plan approval within the confirmed scope.
 1. Read the complete task record, approved plan, affected flow, project
    instructions, and current diff.
 2. For UI work, open every approved repository mockup linked from the task
-   record and give those paths to any implementing writer.
+   record and load `../unslop/SKILL.md` for the bounded UI craft pass below.
+   Give the mockup and skill paths, and these scope rules, to any UI writer.
 3. Use the approved plan to guide each implementation slice and its checks;
    verify dependent behavior and flag any newly discovered impact or scope
    change before departing from the plan.
@@ -77,6 +78,35 @@ replanning and Build without renewed plan approval within confirmed scope.
 Reopen affected tickets, rerun the original scenario and dependent checks, and
 remove temporary instrumentation. Follow the scope and stopping rules; never
 present failed or incomplete validation as ready for UAT.
+
+## UI craft review with Unslop
+
+For UI changes, use `../unslop/SKILL.md` by Damir Sokolovsky to audit the actual
+changed screen for spacing, color, icons, copy, type, layout, details, visuals
+and motion. Read its relevant references and inspect the rendered candidate
+when tools permit. Skip this pass for work without UI changes. If Unslop is
+unavailable, report that limitation and use the project's existing UI checks.
+
+Use the approved mockup and existing product direction as the design brief;
+plan approval or recorded `--auto` authority covers in-scope craft corrections,
+so do not insert another direction-approval question. Fix only observed issues
+within that direction. If no issues remain, record that result without churn.
+A proposed new direction, brand change, feature or scope change goes back to
+Planning/Discussion under the existing gates before implementation.
+
+Project design tokens, approved brand/copy, native UI conventions, accessibility
+and platform-specific skills take precedence over Unslop's web defaults and
+style preferences. For SwiftUI, adapt the audit to native controls and rendered
+states; do not replace system icons, springs or Dynamic Type with web recipes.
+This automatic pass does not authorize dependencies, generated media, snapshots
+of unrelated sites or story videos; use existing task scope and permissions.
+
+Record the findings, corrections and before/after evidence when available.
+Route defects through the short diagnosis/impact check before editing. Rebuild
+or rerender the changed candidate and rerun affected behaviour, accessibility
+and visual-state checks before UAT; Unslop's quick render budget never limits
+required verification. If rendering is unavailable, state what remains
+unverified. Cleanup evidence is not user acceptance.
 
 For iOS UI changes, create a fresh, dedicated simulator with a task-specific
 name and the required device/runtime using `xcrun simctl`. Record its device ID
