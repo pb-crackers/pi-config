@@ -11,6 +11,10 @@ description: >
 Require an Obsidian task record with `Status: awaiting-uat`. The parent owns the
 running app, evidence, and user questions.
 
+Follow `../dev-workflow/references/records.md` for the matching queue entry.
+Keep the bug active during UAT and shipping; tests and acceptance alone do not
+set its resolved date. Requested changes preserve the task and queue identity.
+
 Apply simulator/session requirements and cleanup only to iOS UI candidates.
 For other work, verify the current artifact or running service and its recorded
 checks; do not require a simulator, scheme, or screenshot when inapplicable.

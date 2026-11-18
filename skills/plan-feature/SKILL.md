@@ -11,6 +11,10 @@ description: >
 Require an Obsidian task record with `Status: planning`. Planning changes the
 record and repository mockups only; do not modify product code.
 
+Follow `../dev-workflow/references/records.md`: read the selected task/queue
+entry, preserve its type, and synchronize that entry when phase status changes.
+Replanning a bug does not move it into the feature backlog.
+
 ## Plan
 
 1. Read the complete brief, project instructions, relevant code, current diff,

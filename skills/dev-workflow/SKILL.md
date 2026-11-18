@@ -121,18 +121,24 @@ completion logs.
 3. Compare existing top-level project folders by normalized slug. Reuse the one
    matching folder; ask if multiple folders match. Otherwise create `<slug>/`.
 4. Reuse the folder's single `*-Features.md`, or create
-   `<slug>/<slug>-Features.md` with `Bugs`, `Feature Ideas`, `Improvements`,
-   `Brain Dump`, and `Roadmap` headings. Keep this index for open work only.
-5. Store task records at `<slug>/Tasks/<task-slug>.md` and link them from the
-   feature index. Repository TODO and Markdown plan files are legacy history,
-   not writable workflow sources.
-6. Store completed bugs in `<slug>/bugs-log.md` and completed features and
-   improvements in `<slug>/implementation-log.md`. Each entry links to its task
-   record and includes the completion date and PR when available. Move completed
-   entries out of the feature index after merge; keep full details in task records.
-   If the current task has a legacy `Shipped Features` entry, move only that
-   entry to its log. Leave unrelated history and broader vault migration for
-   separately requested work.
+   `<slug>/<slug>-Features.md` with `Feature Ideas`, `Improvements`, `Brain Dump`,
+   and `Roadmap` headings. Keep these together while small; do not create a file
+   per category or rename existing indexes without a requested reorganization.
+5. Use `<slug>/bugs.md` for the active bug table, `<slug>/bugs-log.md` for resolved
+   bugs, and `<slug>/implementation-log.md` for shipped features/improvements.
+   Create missing queues/logs when needed. Read [record rules](references/records.md)
+   before capture, queue/status updates, completion, reopening, or migration.
+6. Store canonical details at `<slug>/Tasks/<task-slug>.md`, with `Type: bug`,
+   `feature`, or `improvement`, and link them from the matching active queue.
+   Preserve existing paths. Repository TODO and Markdown plan files are legacy
+   history, not writable workflow sources. Migrate only requested records; do
+   not sweep other projects or unrelated completed history into the new layout.
+
+Read the selected queue and task, not the entire project history. Search for
+matching rows/records when choosing work or detecting duplicates/reopens; open
+only related details needed for the task. Do not routinely ingest both queues,
+all of `Tasks/`, full logs, or artifact bodies. Keep queues as short summaries
+and links so they remain useful for the user without loading each report.
 
 When the vault is unavailable, append every intended mutation to
 `OBSIDIAN_OUTBOX.md` at the root of the active task's worktree. Each entry must
@@ -153,6 +159,13 @@ validation, approvals, and completion evidence. Record execution mode, working
 copy identity, research decisions, and links to child decision/implementation
 tickets when needed. Keep HTML mockups in the
 repository at `mockups/<task-slug>/` and link them from the task record.
+
+Bug capture may remain a queue row until investigation. A requested migration
+may preserve an existing full report in a linked `Type: bug`, `Status: reported`
+task without beginning diagnosis. Once a task exists, keep its matching queue
+row's phase status in sync at transitions under the record rules; preserve its
+priority and original reported date. Diagnosing a failure within a feature task
+does not change its type or create a second standalone bug automatically.
 
 Use `ticket-feature` during planning when work needs multiple bounded pieces;
 small tasks stay in one record. Child tickets live under
@@ -185,7 +198,7 @@ session:
 | Task state | Skill |
 | --- | --- |
 | Capture a named idea and description | `../capture-todo/SKILL.md` |
-| Reported bug or `debugging` | `../debug-feature/SKILL.md` |
+| Bug selected for investigation (`reported`) or `debugging` | `../debug-feature/SKILL.md` |
 | New, unclear, or `discussing` | `../discuss-feature/SKILL.md` |
 | `planning` | `../plan-feature/SKILL.md` (loads `../ticket-feature/SKILL.md` for larger work) |
 | `approved` or `building` | `../build-feature/SKILL.md` |

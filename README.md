@@ -36,7 +36,8 @@ Run `./verify.sh` at any time to check links, skills, and package versions. It w
 - staged development workflow skills for todo capture, debugging, discussion,
   planning, dependent implementation tickets, building, UAT, and shipping
 - `unslop` UI craft review during Build, bounded by the approved design
-- Obsidian-backed project records with a repository outbox for offline updates
+- Obsidian-backed feature backlog, separate active/resolved bug tables, canonical
+  task reports, and a repository outbox for offline updates
 - `supabase` and `supabase-postgres-best-practices` skills
 - Omarchy system theme
 - Pinned Pi package declarations
