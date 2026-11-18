@@ -3,8 +3,7 @@ name: capture-todo
 description: >
   Todo intake phase used by dev-workflow. Accepts a required name and
   description and records a concise undiscussed item in the project's Obsidian
-  feature index.
-disable-model-invocation: true
+  feature index or dedicated active bug queue, without starting implementation.
 ---
 
 # Capture Todo
@@ -24,8 +23,9 @@ name; do not make the user provide one.
 
 ## Record
 
-Resolve the Obsidian feature index through `dev-workflow`. Record the item under
-`Feature Ideas` or `Bugs`:
+Read `../dev-workflow/references/records.md` and resolve the project through
+`dev-workflow`. Route bugs to `bugs.md`; route ideas/improvements to their
+section in the existing feature index. Keep a concise summary. A feature entry:
 
 ```markdown
 - [ ] **Offline mode** (`offline-mode`) — Let users access saved content without a connection.
@@ -33,10 +33,16 @@ Resolve the Obsidian feature index through `dev-workflow`. Record the item under
 
 When the vault is unavailable, queue the complete update in
 `OBSIDIAN_OUTBOX.md`. Keep each item on one line and preserve the user's meaning.
-Do not create a task record yet.
+For bugs, use the active table schema with `reported` status, the supplied
+priority or `Untriaged`, and the known reported date. Keep the title unlinked
+until investigation creates a task; do not create an empty report file merely
+to capture a one-line bug. Preserve full supplied details if they exceed a row,
+using a report-only task as described in the record rules rather than losing text.
 
-If the slug already exists, show the existing entry and ask whether to update
-its name or description; never add a silent duplicate.
+If the title/symptom, slug or task link already exists, reuse the matching entry.
+Apply an explicitly requested update or reopen under the record rules without
+another approval question. Ask only when the target or intended change is
+ambiguous; never add a silent duplicate.
 
 ## Finish
 

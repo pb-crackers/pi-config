@@ -11,9 +11,14 @@ description: >
 Do not apply product fixes or commit during this phase. Temporary reproductions
 and targeted instrumentation are allowed within existing authority; record and
 remove them when no longer needed. Set the
-Obsidian task record to `Status: debugging`. If none exists, create
-`<project>/Tasks/<slug>.md`, link it from the feature index, or queue both
-mutations in `OBSIDIAN_OUTBOX.md` when offline.
+Obsidian task record to `Status: debugging`. Read
+`../dev-workflow/references/records.md`. For a selected standalone bug, expand
+its queue row into the existing or new `Type: bug` task at
+`<project>/Tasks/<slug>.md`, preserving the original report, priority and reported
+date, and link it from `bugs.md`. Keep a feature/improvement under diagnosis in
+its existing task and feature index; do not create a duplicate bug. Update only
+the matching queue entry at phase transitions, or queue all intended mutations
+in `OBSIDIAN_OUTBOX.md` when offline.
 
 ## Report
 

@@ -31,10 +31,13 @@ shipping and merge authority; do not ask for either again.
    if the workflow must stop, set `Status: awaiting-merge` so a later invocation
    resumes here. Ask only when blocked. Release or deployment requires separate
    authority.
-7. After merge, record completion evidence. Move the item
-   from the Obsidian feature index to `bugs-log.md` for a bug or
-   `implementation-log.md` for a feature or improvement, with its completion
-   date, task-record link, and PR. If required repository documentation remains,
+7. After merge, follow `../dev-workflow/references/records.md`. For `Type: bug`,
+   move its active `bugs.md` row to the `bugs-log.md` table, preserving its
+   priority, summary, reported date and canonical task link; add the actual
+   resolved date and PR. For features/improvements, move the feature-index
+   entry to `implementation-log.md` with completion evidence. A feature that
+   passed through debugging remains a feature, not a new bug. Update only this
+   task and matching row; preserve unrelated history. If required repository documentation remains,
    ship it through the same gate and a follow-up PR before marking the task
    `done`; do not strand a new local commit after merge. Otherwise set
    `Status: done` once completion records are reconciled.

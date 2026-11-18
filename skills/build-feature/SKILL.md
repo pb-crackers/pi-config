@@ -12,6 +12,10 @@ Require an approved Obsidian implementation or debug plan. Set it to `building`
 before implementation. Recorded `--auto` authorization under `dev-workflow`
 satisfies plan approval within the confirmed scope.
 
+Follow `../dev-workflow/references/records.md`: preserve the task type and keep
+its matching bug-queue or feature-index status in sync. Load only selected or
+genuinely related reports; QA failures stay attached to their parent task.
+
 ## Implement
 
 1. Read the complete task record, approved plan, affected flow, project

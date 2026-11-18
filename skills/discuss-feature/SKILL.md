@@ -14,8 +14,8 @@ owns user-facing decisions; do not implement during this phase.
 
 ## Understand
 
-1. Read the request, project instructions, Obsidian feature index and task
-   record, and relevant code.
+1. Read the request, project instructions, selected queue entry and linked task
+   record, and relevant code. Do not load unrelated project queues/history.
 2. Use a subagent only for a concrete context gap or material independent
    challenge that should save time.
 3. Read load-bearing files, resolve conflicting evidence, and ask only the
@@ -57,13 +57,17 @@ without creating a glossary or ADR for every task.
 
 ## Record
 
-Create or update `<project>/Tasks/<slug>.md` through `dev-workflow` and link it
-from the Obsidian feature index. When offline, queue both mutations in
+Read `../dev-workflow/references/records.md`. Create or update the canonical
+`<project>/Tasks/<slug>.md` through `dev-workflow` and link it from the matching
+queue: bugs stay in `bugs.md`, features/improvements in the feature index.
+Preserve an existing type and report; Discussion does not reclassify a bug or
+create a second task. Keep the row's status in sync. When offline, queue all mutations in
 `OBSIDIAN_OUTBOX.md`. Record:
 
 ```markdown
 # Feature name
 
+Type: feature
 Status: discussing
 Created: YYYY-MM-DD
 
@@ -94,7 +98,8 @@ Created: YYYY-MM-DD
 ```
 
 Keep the brief about outcomes and constraints, not implementation details. When
-discussion starts from a captured item, preserve its description.
+discussion starts from a captured item, preserve its description. Use
+`Type: improvement` for improvements and preserve `Type: bug` for bug work.
 
 ## Planning gate
 

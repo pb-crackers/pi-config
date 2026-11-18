@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Separate active bug queues and resolved bug logs from feature backlogs; keep
+  full reports in linked task records and read only relevant records.
+
 - Added Unslop as a UI craft review during Build, preserving approved designs,
   native patterns and accessibility, with fresh validation after cleanup.
 

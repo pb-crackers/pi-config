@@ -10,6 +10,9 @@ description: >
 
 Read `dev-workflow` for the vault, canonical project, record and authorization
 rules. Require a parent task in `planning`; do not change product code.
+Preserve the parent's type and queue under
+`../dev-workflow/references/records.md`; a bug's child tickets do not become
+separate bug rows or feature entries.
 
 1. Read the confirmed brief, research, resolved decisions, affected code and
    current plan. If a blocking product decision is unresolved, return it to
