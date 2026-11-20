@@ -139,6 +139,11 @@ matching rows/records when choosing work or detecting duplicates/reopens; open
 only related details needed for the task. Do not routinely ingest both queues,
 all of `Tasks/`, full logs, or artifact bodies. Keep queues as short summaries
 and links so they remain useful for the user without loading each report.
+Implementation logs use compact completion tables under the record rules.
+For long tasks, start with metadata, record summary and headings, then load the
+relevant sections; still read every active requirement, constraint and approval
+needed for the work. Preserve history and stable task paths instead of moving
+completed records into a second archive tree.
 
 When the vault is unavailable, append every intended mutation to
 `OBSIDIAN_OUTBOX.md` at the root of the active task's worktree. Each entry must

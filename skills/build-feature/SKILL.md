@@ -23,8 +23,10 @@ genuinely related reports; QA failures stay attached to their parent task.
 
 ## Implement
 
-1. Read the complete task record, approved plan, affected flow, project
-   instructions, and current diff.
+1. Locate the task through its queue/log link and read its summary/headings.
+   Read the complete current brief, approved plan, success criteria, applicable
+   decisions/approvals, affected flow, project instructions and current diff;
+   load relevant historical attempts/evidence without ingesting unrelated history.
 2. For UI work, open every approved repository mockup linked from the task
    record and load `../unslop/SKILL.md` for the bounded UI craft pass below.
    Give the mockup and skill paths, and these scope rules, to any UI writer.

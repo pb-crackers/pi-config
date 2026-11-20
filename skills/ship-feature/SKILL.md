@@ -37,7 +37,10 @@ shipping and merge authority; do not ask for either again.
    move its active `bugs.md` row to the `bugs-log.md` table, preserving its
    priority, summary, reported date and canonical task link; add the actual
    resolved date and PR. For features/improvements, move the feature-index
-   entry to `implementation-log.md` with completion evidence. A feature that
+   entry to a compact `implementation-log.md` row (Completed, Work/task links,
+   Outcome, PR). First preserve full acceptance, merge/check evidence, deployment
+   limits and cleanup/follow-ups in the canonical task and update its record
+   summary; do not append this narrative to the log. A feature that
    passed through debugging remains a feature, not a new bug. Update only this
    task and matching row; preserve unrelated history. If required repository documentation remains,
    ship it through the same gate and a follow-up PR before marking the task
