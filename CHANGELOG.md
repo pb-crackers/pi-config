@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Preserve Build authorization through in-scope diagnosis, fixes, replanning and
+  validation retries in manual mode too; keep initial standalone and UAT gates.
+
 - Separate active bug queues and resolved bug logs from feature backlogs; keep
   full reports in linked task records and read only relevant records.
 

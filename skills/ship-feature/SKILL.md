@@ -26,7 +26,9 @@ shipping and merge authority; do not ask for either again.
    the build evidence. Never ignore a failed check without explicit approval.
 5. If shipping uncovers a required code change or failed check, set
    `Status: debugging` and return to `debug-feature` for cause and impact
-   assessment, then repeat Build validation and UAT before shipping again.
+   assessment. Existing Build authority covers in-scope fixes/replanning without
+   another fix-approval question; repeat Build validation and fresh user UAT
+   before shipping a changed candidate. This never permits bypassing a gate.
 6. When required checks pass, merge without asking. If checks are pending, wait;
    if the workflow must stop, set `Status: awaiting-merge` so a later invocation
    resumes here. Ask only when blocked. Release or deployment requires separate

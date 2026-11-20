@@ -71,7 +71,9 @@ verification steps; simulator-specific requirements apply only to iOS UI work.
   `Status: debugging`, then load `debug-feature` to assess the cause and affected
   dependencies before edits. Reopen affected tickets and invalidate stale
   evidence. Diagnosis may choose a bounded fix, renewed research/planning, or
-  discussion for a changed requirement. Rebuild and validate before new UAT;
+  discussion for a changed requirement. Preserve the task's Build authorization
+  through in-scope recovery; do not ask whether to fix the reported failure,
+  including in manual mode. Rebuild and validate before new UAT;
   prior acceptance never applies to a changed candidate.
 - If the user cannot verify required behavior, remain `awaiting-uat`, keep the
   candidate available, end idle interaction sessions if any, and report the blocker.
@@ -82,5 +84,7 @@ that simulator left behind.
 
 UAT approval grants authority to commit, run the project-defined shipping gate,
 push, open a pull request, and merge after required checks pass. Those actions
-belong to `ship-feature`, not UAT. Ask again only for a blocker, failed gate, or
-separate release or deployment.
+belong to `ship-feature`, not UAT. A failed check returns to authorized diagnosis
+and fixes, not a permission question to repair it. Ask again for a user-dependent
+blocker, missing authority, separate release/deployment, or acceptance of a new
+candidate after required fixes.
