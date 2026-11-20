@@ -11,6 +11,11 @@ description: >
 Require an approved Obsidian implementation or debug plan. Set it to `building`
 before implementation. Recorded `--auto` authorization under `dev-workflow`
 satisfies plan approval within the confirmed scope.
+Record the source and scope as `Build authorization` in the task. It remains
+valid through same-task diagnosis, technical replanning and validation retries,
+including in manual mode, until revoked or the scope changes. Do not ask again
+for permission to fix an in-scope failure. Preserve this authority on resume
+and give it to delegated writers alongside their bounded assignment.
 
 Follow `../dev-workflow/references/records.md`: preserve the task type and keep
 its matching bug-queue or feature-index status in sync. Load only selected or
@@ -18,14 +23,17 @@ genuinely related reports; QA failures stay attached to their parent task.
 
 ## Implement
 
-1. Read the complete task record, approved plan, affected flow, project
-   instructions, and current diff.
+1. Locate the task through its queue/log link and read its summary/headings.
+   Read the complete current brief, approved plan, success criteria, applicable
+   decisions/approvals, affected flow, project instructions and current diff;
+   load relevant historical attempts/evidence without ingesting unrelated history.
 2. For UI work, open every approved repository mockup linked from the task
    record and load `../unslop/SKILL.md` for the bounded UI craft pass below.
    Give the mockup and skill paths, and these scope rules, to any UI writer.
 3. Use the approved plan to guide each implementation slice and its checks;
-   verify dependent behavior and flag any newly discovered impact or scope
-   change before departing from the plan.
+   verify dependent behavior and record newly discovered impact. Revise an
+   in-scope technical approach under existing Build authority; unresolved
+   product/scope decisions return to the user before implementation.
 4. State the validation contract: success criteria, commands, user flows,
    required visual states, and evidence. Cover failure paths as well as success:
    validate inputs, handle API errors without hiding them, and show actionable
@@ -77,8 +85,10 @@ Before fixing a required-check failure or accepted review finding, follow
 `dev-workflow`'s failure recovery: record the symptom, set `Status: debugging`,
 and load `debug-feature` for diagnosis and impact assessment. Do not accumulate
 small patches without reconsidering the cause. A clear local defect can take
-the short diagnosis path. Under `--auto`, continue diagnosis, research,
-replanning and Build without renewed plan approval within confirmed scope.
+the short diagnosis path. Under the task's existing Build authorization,
+continue diagnosis, research, in-scope replanning and Build without renewed
+approval, whether or not `--auto` was used. Diagnose before fixing, then fix and
+test; diagnosis is an internal step, not a new user gate.
 Reopen affected tickets, rerun the original scenario and dependent checks, and
 remove temporary instrumentation. Follow the scope and stopping rules; never
 present failed or incomplete validation as ready for UAT.

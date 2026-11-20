@@ -1,30 +1,53 @@
 {
-  "theme": "omarchy-system",
+  "theme": "herdr-dark",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.6-luna",
+  "defaultModel": "gpt-6.2-sol",
   "defaultThinkingLevel": "medium",
   "packages": [
-    "npm:pi-web-access@0.25.0",
-    "npm:pi-subagents@0.58.0",
-    "npm:@juicesharp/rpiv-ask-user-question@2.7.1",
+    "npm:pi-web-access@0.48.0",
+    "npm:pi-subagents@0.89.1",
+    "npm:@juicesharp/rpiv-ask-user-question@2.15.0",
     "npm:@dietrichgebert/ponytail@4.9.0",
-    "npm:pi-mcp-adapter@2.30.0"
+    "npm:codex-computer-use-mcp@0.7.1",
+    "npm:@amaster.ai/pi-image-gen@0.1.40"
+  ],
+  "skills": [
+    "-~/.agents/skills/supabase/SKILL.md",
+    "-~/.agents/skills/supabase-postgres-best-practices/SKILL.md"
   ],
   "subagents": {
     "agentOverrides": {
       "scout": {
-        "model": "openai-codex/gpt-5.6-luna"
+        "model": "openai-codex/gpt-6.1-sol"
       },
       "worker": {
-        "model": "openai-codex/gpt-5.6-terra"
+        "model": "openai-codex/gpt-6.1-sol"
       },
       "reviewer": {
-        "model": "openai-codex/gpt-5.6-sol"
+        "model": "openai-codex/gpt-6.1-sol"
       },
       "oracle": {
-        "model": "openai-codex/gpt-5.6-sol"
+        "model": "openai-codex/gpt-6.1-sol"
       }
     }
   },
-  "lastChangelogVersion": "0.84.3"
+  "lastChangelogVersion": "1.6.0",
+  "hideThinkingBlock": true,
+  "terminal": {
+    "showTerminalProgress": true
+  },
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-web-access@0.25.0\",\"scope\":\"user\"}": "0.25.0",
+    "{\"source\":\"npm:pi-subagents@0.58.0\",\"scope\":\"user\"}": "0.58.0",
+    "{\"source\":\"npm:pi-web-access@0.48.0\",\"scope\":\"user\"}": "0.48.0",
+    "{\"source\":\"npm:pi-subagents@0.89.1\",\"scope\":\"user\"}": "0.89.1"
+  },
+  "markdown": {
+    "mermaid": "streaming"
+  },
+  "quietStartup": true,
+  "enableSkillCommands": true,
+  "pi-image-gen": {
+    "defaultModel": "gpt-image-2"
+  }
 }

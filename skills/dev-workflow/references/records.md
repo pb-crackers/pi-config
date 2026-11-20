@@ -9,7 +9,28 @@ These are indexes into task records, not additional copies of their reports.
 | `bugs.md` | Active standalone bugs, one short table row each |
 | `Tasks/<task-slug>.md` | Canonical report, investigation, plan, validation and history |
 | `bugs-log.md` | Resolved bug rows with task link, resolved date and PR |
-| `implementation-log.md` | Shipped feature/improvement entries with task links |
+| `implementation-log.md` | Compact shipped-feature/improvement table linking to tasks |
+
+## Read progressively
+
+Choose the queue for the work requested. Search an implementation/bug log by
+title, date, PR or domain terms when past work is relevant; do not read whole
+archives as routine preflight. A log row is a pointer, not a specification or
+proof that every follow-up is complete.
+
+Open the selected task's metadata, short record summary if present, and headings
+first. Then read the sections needed: current scope, complete active plan and
+criteria, applicable decisions/approvals, dependencies, validation or relevant
+prior attempts. Follow child/evidence links only when needed. Read more whenever
+an answer depends on it; context economy must not omit an active requirement,
+constraint or approval boundary. Do not routinely ingest all historical sections,
+all child tasks, raw logs, screenshots or archive contents.
+
+For long records, maintain a short `Record summary` near the top with the current
+outcome/status, completion PR/date when known, pointers to detailed sections,
+and outstanding work or cleanup. Keep the full history below it, clearly
+historical when superseded. Do not rename/move completed task files merely to
+archive them; existing links must keep working.
 
 ## Active bug queue
 
@@ -105,6 +126,40 @@ Do not leave a duplicate current row in both queues or erase past resolution.
 
 Features/improvements move from the feature index to `implementation-log.md`
 after merge. Never create a bug row merely because a feature failed validation.
+
+## Implementation log
+
+Use one short row per shipped delivery, linking related parent tasks in the same
+row when they shipped together. Do not duplicate rows for every child ticket.
+
+```markdown
+# Implementation log
+
+| Completed | Work | Outcome | PR |
+| --- | --- | --- | --- |
+| 2026-11-18 | [[Tasks/photo-pipeline]] | Integrated durable photo processing | PR link |
+```
+
+`Completed` is the recorded completion date, `Work` links to canonical task
+records, `Outcome` is one concise user-facing sentence, and `PR` links to the
+merged change when available. Escape table pipes and keep cells on one line.
+Do not invent a completion date/PR or claim unshipped work as complete.
+
+Before writing or shortening a row, preserve the full completion details in its
+task: acceptance, exact candidate/merge commits, checks/evidence, deployment
+boundaries, limitations, cleanup and follow-ups. Keep the task `done` after
+shipping and update its record summary; pending cleanup or a subsequent action
+remains explicitly visible. Keep actionable follow-up pointers in the active
+feature index when needed without reopening already shipped implementation.
+Later cleanup updates belong in the task, not new paragraphs in the log.
+
+When converting prose, first preserve every original detail in an appropriate
+linked task and verify it before replacing the log. For a multi-task delivery,
+put shared completion detail in the integration parent and link it from related
+tasks rather than duplicating the narrative. Retain existing recorded dates,
+PRs, statuses and task paths, and check known incoming section links before
+removing old log headings. Do not rewrite unrelated history or create annual
+archives until their size or a requested workflow actually warrants it.
 
 ## Scoped migration and offline work
 

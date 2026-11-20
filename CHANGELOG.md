@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+- Set the default model to GPT 6.2 Sol with medium thinking and configure the
+  Pi image-generation extension; preserve current personal Pi preferences.
+
+- Preserve Build authorization through in-scope diagnosis, fixes, replanning and
+  validation retries in manual mode too; keep initial standalone and UAT gates.
+
+- Use Pi's built-in MCP support with the existing personal server configuration.
+- Upgrade web-access, subagents and ask-user-question to releases with host-provided
+  TypeBox peer dependencies; pin the installed computer-use package version.
+- Exclude duplicate shared Supabase skills in Pi without deleting them for other tools.
+
+- Keep implementation logs as compact task-linked tables; preserve completion
+  detail and follow-ups in canonical tasks and read long records progressively.
+
 - Separate active bug queues and resolved bug logs from feature backlogs; keep
   full reports in linked task records and read only relevant records.
 

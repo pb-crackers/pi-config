@@ -139,6 +139,11 @@ matching rows/records when choosing work or detecting duplicates/reopens; open
 only related details needed for the task. Do not routinely ingest both queues,
 all of `Tasks/`, full logs, or artifact bodies. Keep queues as short summaries
 and links so they remain useful for the user without loading each report.
+Implementation logs use compact completion tables under the record rules.
+For long tasks, start with metadata, record summary and headings, then load the
+relevant sections; still read every active requirement, constraint and approval
+needed for the work. Preserve history and stable task paths instead of moving
+completed records into a second archive tree.
 
 When the vault is unavailable, append every intended mutation to
 `OBSIDIAN_OUTBOX.md` at the root of the active task's worktree. Each entry must
@@ -176,6 +181,19 @@ ticket completion never replaces whole-feature validation or user acceptance.
 
 ## Failure recovery
 
+Once the user authorizes Build for a task, that authority covers diagnosis,
+in-scope fixes, technical plan/ticket revisions and repeated validation until
+the candidate is ready for UAT. This is normal Build behaviour, including in
+manual mode; it does not require `--auto`. Entering `debugging` or `planning`
+during recovery does not revoke that authority or reopen an approval gate.
+
+Record `Build authorization` with its source (user instruction, approved plan,
+or recorded `--auto` authority) and confirmed scope. Carry it through internal
+handoffs, delegated work and resumed sessions. For existing tasks, recover it
+from the recorded approval history rather than asking again. Status alone is
+not authorization; do not borrow it from another task. Respect any later user
+pause, revocation or narrowed scope.
+
 For a failed required check, accepted review finding, or reported UAT failure,
 record the symptom and failed criterion before changing code. Set
 `Status: debugging` and load `debug-feature` to trace cause and impact. A clear
@@ -189,6 +207,15 @@ useful work and evidence rather than resetting the feature. Neither a requested
 UAT fix nor `--auto` permits unrelated changes or new product scope. A stale
 candidate or missing test environment requires preparation/revalidation; it is
 not by itself evidence of a product defect.
+
+After diagnosis, continue the authorized fix/replan/build/test loop without
+asking whether to fix the error or implement the in-scope revised plan. Report
+what changed and why as progress, not a permission request. Ask only for an
+unresolved product/scope decision, genuinely missing external permission/access,
+an action outside existing authority, or a blocker that requires the user.
+Keep the final UAT acceptance gate; previous acceptance does not cover a changed
+candidate. Standalone diagnosis before Build was authorized still uses its
+initial fix-plan gate unless the user already authorized the fix.
 
 ## Routing
 
@@ -216,11 +243,17 @@ optional. UAT still requires the user's acceptance.
 
 In `--auto` mode, the recorded authorization satisfies gates 2 and 3 within the
 confirmed scope; record the plan and continue without an approval question.
+Existing Build authorization also satisfies those gates for same-task in-scope
+recovery, regardless of execution mode. Initial standalone diagnosis/planning
+retains its gate; do not confuse an internal diagnostic detour with new work.
 All other gates remain unchanged.
 
 1. Discussion → planning: confirm the brief, scope, and success criteria.
-2. Debugging → build: approve the root cause analysis and fix plan.
-3. Planning → build: approve the implementation plan and every UI mockup.
+2. Initial standalone debugging → build: approve the root cause analysis and
+   fix plan unless already authorized. Recovery within authorized Build resumes automatically.
+3. Initial planning → build: approve the implementation plan and every UI mockup.
+   In-scope technical replanning during authorized Build resumes automatically;
+   a new product scope or visual direction still needs the user's decision.
 4. Build → UAT: automatic after review and validation. Build owns internal
    checks; UAT owns presenting the current candidate ready for user testing.
 5. UAT → ship: approval of behavior and every changed visual state also grants

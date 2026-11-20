@@ -24,8 +24,8 @@ Replanning a bug does not move it into the feature backlog.
 3. Map every success criterion to affected code or data flow, implementation
    slices, checks, and evidence. Trace callers, consumers, data contracts, and
    other dependent behavior before changing or removing anything; include
-   necessary follow-up changes and checks. Raise material impacts or scope
-   decisions with the user before approval.
+   necessary follow-up changes and checks. Report technical impacts as progress;
+   take unresolved product/scope decisions to the user before implementation.
 4. For new code, follow established project conventions. In a greenfield project,
    choose simple, consistent API names and request/response/error shapes before
    the first endpoint; define how failures are validated, reported, and shown
@@ -84,8 +84,15 @@ Add an `## Implementation plan` section to the task record containing:
 - validation commands, target environment, state setup, and visual states;
 - linked mockups, risks, and decisions.
 
-When the task has active `--auto` authorization under `dev-workflow`, record the
-plan and every UI mockup as authorized by `--auto`, set `Status: approved`, and
+For same-task recovery with existing `Build authorization`, record the revised
+technical plan/tickets and in-scope mockup corrections under that authority,
+set `Status: approved`, and resume `build-feature` without renewed approval,
+including in manual mode. This does not approve a new visual direction or
+product scope. Recover authorization from prior approvals on resume; do not
+infer it solely from a status value or an unrelated task.
+
+Otherwise, when the task has active `--auto` authorization under `dev-workflow`,
+record the plan and every UI mockup as authorized by `--auto`, set `Status: approved`, and
 continue directly to `build-feature`. Revisions within the confirmed scope use
 the same authorization; unresolved product or scope decisions still need the user.
 

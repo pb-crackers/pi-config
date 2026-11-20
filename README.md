@@ -37,10 +37,13 @@ Run `./verify.sh` at any time to check links, skills, and package versions. It w
   planning, dependent implementation tickets, building, UAT, and shipping
 - `unslop` UI craft review during Build, bounded by the approved design
 - Obsidian-backed feature backlog, separate active/resolved bug tables, canonical
-  task reports, and a repository outbox for offline updates
+  task reports with concise summaries, a compact implementation-log table, and a
+  repository outbox for offline updates
 - `supabase` and `supabase-postgres-best-practices` skills
 - Omarchy system theme
 - Pinned Pi package declarations
+- Pi's built-in MCP support (personal servers stay in `~/.pi/agent/mcp.json`)
+- Pi-only exclusions for duplicate shared Supabase skills; other tools keep their copies
 
 ## Deliberately excluded
 

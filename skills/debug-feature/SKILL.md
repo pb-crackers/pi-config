@@ -8,9 +8,12 @@ description: >
 
 # Debug Feature
 
-Do not apply product fixes or commit during this phase. Temporary reproductions
-and targeted instrumentation are allowed within existing authority; record and
-remove them when no longer needed. Set the
+Diagnose here, then apply fixes through Build. For recovery within an authorized
+dev-workflow, that handoff is automatic within the existing scope; do not stop
+to request fix approval. Standalone diagnosis without existing fix authority
+uses the initial gate below. Do not commit during diagnosis. Temporary
+reproductions and targeted instrumentation are allowed within existing
+authority; record and remove them when no longer needed. Set the
 Obsidian task record to `Status: debugging`. Read
 `../dev-workflow/references/records.md`. For a selected standalone bug, expand
 its queue row into the existing or new `Type: bug` task at
@@ -87,7 +90,8 @@ validation.
 ## Route before editing
 
 - Local defect: record a bounded fix and its dependency/regression checks, then
-  use the approval gate below.
+  continue Build under existing task authority, or use the initial gate below
+  when no fix authority exists.
 - Implementation or architectural issue: record why the approach failed, set
   `Status: planning`, and return to `plan-feature` to research alternatives and
   revise affected tickets. A larger implementation change can remain within
@@ -102,15 +106,24 @@ Preserve useful code and evidence. Do not reset the feature, add unrelated
 refactors, or lower success criteria. If no viable next approach remains,
 record the blocker and stop the loop.
 
-## Approval gate
+## Return to Build or initial approval
 
-When the task has active `--auto` authorization under `dev-workflow`, record the
-evidence-backed root cause analysis and fix plan as authorized by `--auto`, set
-`Status: approved`, and continue directly to `build-feature` within the confirmed
-scope. Unresolved evidence requires more investigation or a blocker report.
+First check the task's `Build authorization` and approval history. If diagnosis
+was entered from an authorized Build/test/UAT-recovery loop, record the root
+cause and fix plan as covered by that authority, set `Status: approved`, and
+continue directly to `build-feature`. Do this in manual mode too; do not require
+`--auto`, ask "may I fix it?", or stop after presenting a fix plan. The same
+authority covers in-scope technical replanning through `plan-feature`.
 
-Otherwise, present the root cause analysis and fix plan. Ask whether to approve
-it for Build.
+Recorded `--auto` or an explicit user instruction already authorizing a bounded
+fix also satisfies the gate. Preserve the actual authority source; never label
+an internal plan revision as newly user-reviewed. Unresolved evidence requires
+more investigation or a blocker report, not an approval question for its own sake.
+
+Only for an initial standalone diagnosis or other task without existing Build/
+fix authority, present the root cause analysis and fix plan and ask whether to
+approve it for Build. New product/scope decisions, revoked authority and missing
+external permissions still return to the user under the parent rules.
 
 - On approval, set `Status: approved` and continue to `build-feature`.
 - On requested changes or unresolved evidence, remain `debugging`.
