@@ -148,6 +148,8 @@ what changed, its impact, options and recommendation. Update this same brief,
 record the user's resolution and send affected requirements back to Planning;
 do not restart settled discussion or silently change the end state.
 
-- On approval, set `Status: planning` and continue to `plan-feature`.
+- On approval, set the selected executable task to `Status: planning` and
+  continue to `plan-feature`. For a split request keep the group `tracking`;
+  only transition the executable briefs actually approved for planning.
 - On requested changes, revise the brief and ask again.
 - On pause, leave `Status: discussing`.
