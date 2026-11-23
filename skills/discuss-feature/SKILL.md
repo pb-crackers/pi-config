@@ -63,13 +63,29 @@ does not authorize production integration. Keep reusable domain definitions and
 consequential decision rationale in existing project docs when appropriate,
 without creating a glossary or ADR for every task.
 
+## Separate outcomes before implementation tickets
+
+Check whether a broad request contains capabilities with distinct behaviour,
+rules, acceptance criteria or priorities. For example, "add logging" may mean
+error monitoring and product usage analytics: separate tasks sharing a request,
+not one oversized implementation ticket. Shared infrastructure alone does not
+make them one task. Keep a genuinely coherent small request together.
+
+Present the proposed task boundaries, included outcomes, dependencies and
+exclusions within the existing brief confirmation. When the request is split,
+retain its original description in a lightweight group and create/reuse linked
+task records under the record rules. Each task owns its brief and success
+criteria; decide detailed implementation tickets in Planning. Do not infer
+that decomposition authorizes building every task or reclassify existing bugs.
+
 ## Record
 
 Read `../dev-workflow/references/records.md`. Create or update the canonical
 `<project>/Tasks/<slug>.md` through `dev-workflow` and link it from the matching
 queue: bugs stay in `bugs.md`, features/improvements in the feature index.
-Preserve an existing type and report; Discussion does not reclassify a bug or
-create a second task. Keep the row's status in sync. When offline, queue all mutations in
+Preserve an existing type and report; splitting distinct outcomes uses the
+linked grouping rules, not duplicate reports for the same work. Keep the row's
+status in sync. When offline, queue all mutations in
 `OBSIDIAN_OUTBOX.md`. Record:
 
 ```markdown
@@ -132,6 +148,8 @@ what changed, its impact, options and recommendation. Update this same brief,
 record the user's resolution and send affected requirements back to Planning;
 do not restart settled discussion or silently change the end state.
 
-- On approval, set `Status: planning` and continue to `plan-feature`.
+- On approval, set the selected executable task to `Status: planning` and
+  continue to `plan-feature`. For a split request keep the group `tracking`;
+  only transition the executable briefs actually approved for planning.
 - On requested changes, revise the brief and ask again.
 - On pause, leave `Status: discussing`.

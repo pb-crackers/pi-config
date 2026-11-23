@@ -89,9 +89,17 @@ the confirmed outcome stay in Planning under existing authorization.
 
 ## Implementation slices
 
-For work too large for one bounded implementation session or with distinct
-dependencies, load `../ticket-feature/SKILL.md` to create or revise Obsidian
-implementation tickets. Keep trivial work in the parent record. Include ticket
+First verify this is one executable task, not a grouping record containing
+distinct capabilities. Return newly discovered task-boundary decisions to
+Discussion; do not hide separate tasks in oversized tickets.
+
+Load `../ticket-feature/SKILL.md` when the task needs multiple narrow deliverables
+or exceeds a fresh agent context including implementation and validation.
+Let the count emerge from deliverable boundaries and genuine dependencies;
+do not choose a ticket quota or split by file/layer. Keep trivial work in the
+task record. Review granularity internally and present the ticket count, titles,
+deliverables and blockers as a concise breakdown within the existing plan review;
+the user need not inspect or approve every ticket. Include ticket
 coverage, dependencies, and final integration checks in the existing plan gate;
 do not add another approval gate. During recovery, read the diagnosis, revise
 only affected plans/tickets, and invalidate stale validation evidence.
