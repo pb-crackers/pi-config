@@ -36,12 +36,53 @@ Replanning a bug does not move it into the feature backlog.
 
 ## Reuse and decomposition
 
-Read the discussion's research and verify the selected approach against current
-primary sources before relying on unfamiliar APIs, libraries, or platform
-behaviour. Check compatibility and integration cost; record the reuse/custom
-decision and citations in the task. Research missing facts now. If an assumption
-fails, reconsider the approach before elaborating the implementation. Return
-product decisions to discussion; do not quietly expand the approved scope.
+Read Discussion's research. Before committing to a design, inspect existing
+project capabilities and dependencies, then investigate relevant platform facilities, maintained open
+source and established methods. Research unfamiliar or consequential choices
+using current primary sources. Explain how findings shaped the design: selected
+reuse/custom approach, credible alternatives, fit/gaps, compatibility,
+integration cost and limits, with source links. Reuse settled evidence when still applicable; straightforward
+familiar changes do not require a new research project. Record assumptions and
+the focused experiment needed to verify uncertain technical claims; use the
+bounded `prototype` skill when an artifact is needed, not production code here.
+If evidence invalidates an assumption, reconsider the approach before detailing
+the implementation; do not quietly expand the approved scope.
+
+## Engineering design and collaboration
+
+Explain HOW the change will work before Build, with concrete names, shapes and
+examples appropriate to its complexity. A file list or "update the flow" is not
+a design. Include only the applicable details:
+
+| Area | Design to record |
+| --- | --- |
+| Database | Tables, columns and types, relationships, constraints, defaults, indexes, access rules, and migration/backfill approach where needed. |
+| APIs | Endpoints/operations, request and response shapes, validation, authentication/authorization, errors and affected consumers. |
+| App | Screens/components, interactions/navigation, state ownership, data flow, and integration with existing behaviour. |
+| Background work | Triggers, processing steps, retries, failure handling and duplicate handling where relevant. |
+| Existing behaviour | Compatibility, dependencies, affected contracts and migration implications. |
+
+Describe observable behaviour and business rules alongside these contracts.
+Use small diagrams or worked examples when they clarify the design. Do not
+prewrite every function or inflate a small change with irrelevant sections.
+
+Present the engineering design in plain language for co-engineering: explain
+meaningful choices and tradeoffs, show the relevant schema/API/state details,
+and allow focused refinement before normal plan approval. A short progress
+summary does not replace the recorded design. Keep unresolved engineering
+questions visible; investigate factual answers and request user input on
+consequential choices that existing requirements do not settle. Do not invent
+user decisions, require a fixed number of rounds or add a second approval gate.
+Explicit `--auto` and existing Build authority retain their rules below.
+
+Return to Discussion only when a discovery changes intended behaviour, exposes
+a missing product decision or challenges an agreed constraint. State the finding,
+affected requirement, options and recommendation; set `Status: discussing` and
+resolve that decision. Then update the same brief, design, affected tickets and
+validation mapping before proceeding. Purely technical refinements that fit
+the confirmed outcome stay in Planning under existing authorization.
+
+## Implementation slices
 
 For work too large for one bounded implementation session or with distinct
 dependencies, load `../ticket-feature/SKILL.md` to create or revise Obsidian
@@ -78,11 +119,19 @@ approved visual target; a fresh simulator render remains final proof.
 Add an `## Implementation plan` section to the task record containing:
 
 - affected flows and files, dependent behavior, and required follow-up changes;
+- the concrete engineering design and contracts described above;
 - ordered implementation slices;
 - reuse decision and cited research, linked tickets and their blocking edges;
 - success-criterion-to-validation mapping;
 - validation commands, target environment, state setup, and visual states;
 - linked mockups, risks, and decisions.
+
+Check readiness before using any authorization path below: could another agent
+implement this without inventing consequential product behaviour or engineering
+contracts? Every active success criterion needs a concrete acceptance example
+and validation path. Resolve blocking questions, reconcile research with the
+brief, and label remaining nonblocking assumptions with their verification
+steps. `--auto` skips plan approval, not this design/readiness work.
 
 For same-task recovery with existing `Build authorization`, record the revised
 technical plan/tickets and in-scope mockup corrections under that authority,

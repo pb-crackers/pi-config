@@ -27,6 +27,11 @@ separate bug rows or feature entries.
 3. Create or update `<project>/Tasks/<task-slug>/<ticket-id>.md`. Link every
    child from the parent with its title, status and blockers. Use stable IDs
    across replans and resume. Store the full details once, in the child.
+   Carry the relevant engineering design/contracts into the child or link to
+   precise canonical plan sections; do not duplicate shared designs. Identify
+   which parent success criteria it serves and include concrete acceptance
+   examples. A writer should not need to invent consequential behaviour or
+   contracts to complete the ticket.
 4. Map every parent success criterion to ticket acceptance criteria or an
    explicit whole-feature integration check. Check for omissions, duplicated
    work, cycles, nonexistent blockers and accidental scope additions. Dependencies
@@ -44,8 +49,10 @@ Status: pending
 Blocked by: <stable ticket IDs, or None>
 
 ## Outcome
+## Parent criteria and engineering design
+- Parent criteria served, relevant contracts/design links, and dependencies
 ## Acceptance criteria
-- [ ] Observable behaviour
+- [ ] Concrete starting conditions, action and expected result
 ## Validation
 - Commands, setup, and required evidence
 ## Working copy
