@@ -2,8 +2,8 @@
 name: discuss-feature
 description: >
   Discussion phase used by dev-workflow for intentionally started new or
-  unclear work. Defines the product brief, success criteria, and visual states
-  before implementation planning.
+  unclear work. Collaboratively defines the intended functionality, scope,
+  success criteria and visual states in conversation before implementation planning.
 ---
 
 # Discuss Feature
@@ -23,12 +23,22 @@ owns user-facing decisions; do not implement during this phase.
 
 ## Clarify and research before choosing a solution
 
-Understand the intended outcome before committing to an implementation. Ask
-focused rounds of questions in dependency order, with a recommended answer and
-its tradeoff. Ask only questions whose prerequisites are settled; don't repeat
-answered questions or turn a clear request into an exhaustive interview. Look
-up factual answers yourself. The user decides product behaviour, priorities,
-scope, and consequential tradeoffs; do not answer those on their behalf.
+Make this a collaborative conversation. Start with a short reflection of what
+you understand the user wants and the meaningful gaps to explore. Ask a small,
+focused set of questions with options and recommendations, then wait for the
+answers before treating those choices as settled. Respond to the answers:
+explain implications, challenge conflicting requirements and walk through
+concrete behaviour together. Surface consequential assumptions as proposals,
+not decisions silently made on the user's behalf.
+
+Let the exchange follow the uncertainty, without a minimum duration or number
+of rounds. Reuse answers already given; a complete supplied brief or an explicit
+request to skip exploration does not need a manufactured interview. Keep the
+intended functionality and scope visible in chat as understanding develops.
+
+Ask questions in dependency order once their prerequisites are settled and
+look up factual answers yourself. The user decides product behaviour,
+priorities, scope and consequential tradeoffs.
 
 Describe the intended end-to-end experience: starting conditions, actions,
 observable results and resulting state. Work through concrete examples, business
@@ -79,6 +89,11 @@ criteria; decide detailed implementation tickets in Planning. Do not infer
 that decomposition authorizes building every task or reclassify existing bugs.
 
 ## Record
+
+Capture decisions as they emerge and keep documentation proportional to the
+work. Avoid producing speculative documents ahead of the conversation. The
+brief preserves shared understanding; the user should not need to open it to
+understand what is proposed or correct the scope.
 
 Read `../dev-workflow/references/records.md`. Create or update the canonical
 `<project>/Tasks/<slug>.md` through `dev-workflow` and link it from the matching
@@ -140,8 +155,21 @@ blocking ambiguity in focused rounds; do not substitute filled headings or a
 fixed question count for readiness. Technical unknowns may proceed to Planning
 when recorded with an investigation path; product assumptions are not decisions.
 
-Present the outcome, scope, success criteria, and visual states. Ask whether the
-user approves the brief for planning.
+Before moving to Planning, give a self-contained summary directly in chat,
+scaled to the work:
+
+- what we are building and the intended result;
+- included functionality, main interactions, applicable failure behaviour and
+  changed visual states;
+- excluded or deferred work;
+- decisions made and meaningful tradeoffs;
+- observable success criteria;
+- remaining engineering research/design questions for Planning.
+
+Distinguish agreed scope from unresolved proposals. The summary must be specific
+enough for the user to correct without opening a document; link the brief as
+supporting detail. Ask whether the user approves that scope for Planning using
+the existing gate. A completed document alone does not establish shared scope.
 
 When Planning returns with a discovery, discuss only the affected decision:
 what changed, its impact, options and recommendation. Update this same brief,
