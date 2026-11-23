@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Separate broad requests into outcome-based tasks and narrow complete tickets;
+  check fresh-context size during Planning without ticket approval gates, and
+  track grouped completion without completing unrelated sibling work.
+
 - Integrate the current remote target before UAT and recheck before merge;
   retain acceptance for evidenced behavior-preserving integration repairs,
   with focused UAT for changed or uncertain behavior.

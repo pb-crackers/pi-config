@@ -58,6 +58,9 @@ checks; do not claim a manual freshness check eliminates the final race.
    ship it through the same gate and a follow-up PR before marking the task
    `done`; do not strand a new local commit after merge. Otherwise set
    `Status: done` once completion records are reconciled.
+   If this task belongs to a group, update only its linked progress under the
+   record rules. Do not complete siblings or close the group because this PR
+   merged; require accepted, merged evidence for all agreed group outcomes.
 8. After confirming merge preservation, record child-ticket completion and
    follow `dev-workflow`'s working-copy cleanup rules. Preserve external skill
    edits and needed evidence that are not in this PR. Leave owned worktrees

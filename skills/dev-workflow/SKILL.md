@@ -163,7 +163,14 @@ merged safely, then delete the outbox after every entry is applied.
 
 ## Task records
 
-Create one task record when intentional discussion begins. It is the source of
+Start one record when intentional discussion begins. If the request contains
+distinct outcomes, Discussion separates executable tasks and retains a lightweight
+grouping record under the record rules. The hierarchy is broad request → tasks
+→ implementation tickets → engineering steps. A task owns one coherent capability
+and its brief/design/acceptance; a ticket owns one narrow verifiable deliverable.
+Multiple files or layers alone do not require separate tasks or tickets.
+
+Each executable task record is the source of
 truth for the brief, success criteria, decisions, implementation plan,
 validation, approvals, and completion evidence. Record execution mode, working
 copy identity, research decisions, and links to child decision/implementation
@@ -247,6 +254,12 @@ Standalone diagnosis before Build was authorized still uses its
 initial fix-plan gate unless the user already authorized the fix.
 
 ## Routing
+
+Before status routing, check `Record role`. A `group` coordinates linked tasks;
+it is not a Build assignment. Read its rollup, select the requested/authorized
+child and resume that child's state. Do not start all siblings merely because
+their group was opened. Apply explicit group-wide scope/authorization only to
+the tasks it actually covers, recording its source in each selected task.
 
 Load the matching sibling skill with `read` and follow it in this parent
 session:

@@ -63,13 +63,29 @@ does not authorize production integration. Keep reusable domain definitions and
 consequential decision rationale in existing project docs when appropriate,
 without creating a glossary or ADR for every task.
 
+## Separate outcomes before implementation tickets
+
+Check whether a broad request contains capabilities with distinct behaviour,
+rules, acceptance criteria or priorities. For example, "add logging" may mean
+error monitoring and product usage analytics: separate tasks sharing a request,
+not one oversized implementation ticket. Shared infrastructure alone does not
+make them one task. Keep a genuinely coherent small request together.
+
+Present the proposed task boundaries, included outcomes, dependencies and
+exclusions within the existing brief confirmation. When the request is split,
+retain its original description in a lightweight group and create/reuse linked
+task records under the record rules. Each task owns its brief and success
+criteria; decide detailed implementation tickets in Planning. Do not infer
+that decomposition authorizes building every task or reclassify existing bugs.
+
 ## Record
 
 Read `../dev-workflow/references/records.md`. Create or update the canonical
 `<project>/Tasks/<slug>.md` through `dev-workflow` and link it from the matching
 queue: bugs stay in `bugs.md`, features/improvements in the feature index.
-Preserve an existing type and report; Discussion does not reclassify a bug or
-create a second task. Keep the row's status in sync. When offline, queue all mutations in
+Preserve an existing type and report; splitting distinct outcomes uses the
+linked grouping rules, not duplicate reports for the same work. Keep the row's
+status in sync. When offline, queue all mutations in
 `OBSIDIAN_OUTBOX.md`. Record:
 
 ```markdown

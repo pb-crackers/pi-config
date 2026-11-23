@@ -17,9 +17,12 @@ separate bug rows or feature entries.
 1. Read the confirmed brief, research, resolved decisions, affected code and
    current plan. If a blocking product decision is unresolved, return it to
    discussion rather than inventing a build ticket around an assumption.
-2. Split larger work into bounded pieces that each fit one implementation
-   session and deliver independently verifiable behaviour through the required
-   layers. Avoid tickets that merely say "database", "backend", and "UI".
+2. Split work into narrow but complete vertical slices: one coherent deliverable
+   per ticket, demoable or verifiable on its own once declared blockers pass.
+   Each must fit a single fresh agent context, including loading relevant design,
+   implementation and validation; a long multi-context session is not the size
+   limit. Cross every layer needed for that outcome. Avoid tickets that merely
+   say "database", "backend", and "UI" or bundle independent capabilities.
    Keep genuinely necessary preparation explicit. For wide mechanical changes,
    use compatible expand/migrate/contract steps; when intermediate steps cannot
    stay green, record the integration branch and final gate instead of claiming
@@ -36,8 +39,14 @@ separate bug rows or feature entries.
    explicit whole-feature integration check. Check for omissions, duplicated
    work, cycles, nonexistent blockers and accidental scope additions. Dependencies
    must identify work genuinely needed before the ticket can start.
-5. Present the breakdown as part of the implementation plan. The normal plan
-   approval or recorded `--auto` authorization covers it; no separate gate.
+5. Review granularity before Build. Split separately useful/completable outcomes
+   with independent acceptance groups. Keep supporting steps and relevant failure
+   handling with their deliverable; do not turn every file, layer or edge case
+   into a ticket. If it contains distinct task-level outcomes, return that boundary
+   to Discussion. Check the complete graph's coverage, blockers and fresh-context
+   size, then present count, titles, deliverables and blockers in the plan review.
+   Correct the breakdown internally; no ticket-by-ticket approval. The existing
+   plan approval, `--auto` or same-task recovery authority covers it.
 
 Each child records:
 
@@ -49,6 +58,9 @@ Status: pending
 Blocked by: <stable ticket IDs, or None>
 
 ## Outcome
+- One concrete deliverable and how to demonstrate it
+## Scope boundaries
+- Included behaviour and explicitly excluded adjacent work
 ## Parent criteria and engineering design
 - Parent criteria served, relevant contracts/design links, and dependencies
 ## Acceptance criteria
@@ -74,3 +86,7 @@ Do not reset unrelated completed work. Completing all children still requires
 parent-level integration validation, UAT, and merge before the feature is done.
 When the vault is unavailable, queue complete child and parent mutations in the
 task worktree's `OBSIDIAN_OUTBOX.md` under `dev-workflow`'s rules.
+
+These sizing rules adapt the vertical-slice and fresh-context guidance from
+[Matt Pocock's to-tickets](https://github.com/mattpocock/skills/blob/abeeaf95660ba9e8b7c753eb38f441ca707a8823/skills/engineering/to-tickets/SKILL.md).
+Here, breakdown review stays within the existing planning gate.

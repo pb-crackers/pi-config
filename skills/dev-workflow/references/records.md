@@ -11,6 +11,42 @@ These are indexes into task records, not additional copies of their reports.
 | `bugs-log.md` | Resolved bug rows with task link, resolved date and PR |
 | `implementation-log.md` | Compact shipped-feature/improvement table linking to tasks |
 
+## Groups, executable tasks and tickets
+
+Use existing `Tasks/` paths, not a new tracker. A broad request containing
+distinct outcomes may keep its original record as a lightweight coordination
+group with `Record role: group` (separate from its existing Type). Executable
+tasks omit that field or use `Record role: task`. Do not add group records for
+ordinary single-task work or bulk-reorganize existing records without scope.
+
+Group records preserve the original request, agreed included/excluded outcomes,
+cross-task dependencies, applicable authorization sources and links to executable
+tasks. They use `Status: tracking` while agreed tasks remain and `done` only
+after all agreed outcomes have accepted, merged completion evidence. They do not
+have their own implementation tickets, Build assignment or mandatory worktree.
+Record intentional deferrals/cancellations explicitly with user authority; do
+not disguise them as delivered outcomes. Group progress is a summary of linked
+task evidence, not a second copy of task specs or invented phase transitions.
+
+Each executable task stays at `Tasks/<task-slug>.md`, with optional
+`Group: [[<group-slug>]]`, its own brief/design/criteria, phase, dependencies,
+authorization and working copy when implementation starts. Group rows link to
+the structure; executable tasks have their own matching queue rows. Tickets
+remain at `Tasks/<task-slug>/<ticket-id>.md` with no queue row. Their engineering
+steps/checklists are not additional tickets unless they deliver distinct outcomes.
+
+Read the group summary and selected task, not every sibling. Do not migrate,
+rename, delete or duplicate existing reports merely to adopt this hierarchy.
+When deliberately splitting an existing record, preserve its original report,
+type, dates and links, link the extracted tasks and put each requirement's
+authoritative detail in one task. Preserve existing bug identity and priority;
+splitting does not imply resolution or create duplicate bug reports.
+
+Shipping a task completes only that task. Update its group's linked rollup,
+leaving siblings untouched. A group is not shipped by association with one PR;
+retain its active row until all agreed work is accounted for, then record the
+aggregate completion and links without duplicating delivery log rows.
+
 ## Read progressively
 
 Choose the queue for the work requested. Search an implementation/bug log by

@@ -61,6 +61,14 @@ evidence and plan adjustment, preserving useful work and affected validation.
 Do not absorb unrelated findings into the task. Technical changes within scope
 use existing Build authority; missing product decisions return to Discussion.
 
+When a ticket grows, reassess its deliverable and fresh-context size. Keep
+necessary implementation steps and failure handling together; split newly
+discovered independent deliverables into linked tickets through Planning.
+Distinct capabilities require a task-boundary decision through Discussion.
+Preserve stable ticket IDs, completed evidence and dependencies; do not silently
+expand the active ticket. In-scope ticket replanning retains Build authority,
+without a new ticket-approval gate or automatic authority over sibling tasks.
+
 When child tickets exist, work only ready tickets in dependency order. Record
 the writer's claim and path before edits. Validate each ticket's acceptance
 criteria and record evidence before marking it `validated`; integrate delegated
