@@ -27,6 +27,11 @@ limitations, and user test steps. Confirm it matches current source; if stale,
 return to Build for fresh validation before acceptance. Present the artifact or
 running service in the required state.
 
+Confirm Build recorded integration with the current fetched remote target under
+`../dev-workflow/references/integration.md` before final validation. Record that
+target SHA with acceptance. Later target changes use the reference's delta
+review and evidence rules; source identity changes alone do not require new UAT.
+
 For iOS UI candidates, additionally:
 
 1. Confirm Build recorded the workspace, scheme, dedicated simulator UUID and
@@ -73,8 +78,10 @@ verification steps; simulator-specific requirements apply only to iOS UI work.
   evidence. Diagnosis may choose a bounded fix, renewed research/planning, or
   discussion for a changed requirement. Preserve the task's Build authorization
   through in-scope recovery; do not ask whether to fix the reported failure,
-  including in manual mode. Rebuild and validate before new UAT;
-  prior acceptance never applies to a changed candidate.
+  including in manual mode. Rebuild and validate before focused UAT of the
+  reported failure and affected criteria. Preserve unaffected acceptance with
+  evidence under the integration rules; never treat tests as user acceptance
+  of the repaired behavior.
 - If the user cannot verify required behavior, remain `awaiting-uat`, keep the
   candidate available, end idle interaction sessions if any, and report the blocker.
 
@@ -86,5 +93,6 @@ UAT approval grants authority to commit, run the project-defined shipping gate,
 push, open a pull request, and merge after required checks pass. Those actions
 belong to `ship-feature`, not UAT. A failed check returns to authorized diagnosis
 and fixes, not a permission question to repair it. Ask again for a user-dependent
-blocker, missing authority, separate release/deployment, or acceptance of a new
-candidate after required fixes.
+blocker, missing authority, separate release/deployment, or focused acceptance
+when behavior changes or preservation cannot be established under the integration
+rules. Do not ask for shipping permission merely because main advanced.

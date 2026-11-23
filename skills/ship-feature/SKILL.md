@@ -12,6 +12,14 @@ Require an Obsidian task record with `Status: approved-to-ship`, `shipping`, or
 `awaiting-merge` and recorded UAT approval. That approval grants the parent
 shipping and merge authority; do not ask for either again.
 
+Follow `../dev-workflow/references/integration.md`. Before the shipping gate,
+fetch the intended remote target and integrate it if needed in this task's
+worktree. Assess incoming/combined changes and record candidate, target and
+acceptance applicability. Check freshness again immediately before merge;
+repeat integration and required validation if the target advanced, or use an
+existing merge queue that validates the combined result. Respect required
+checks; do not claim a manual freshness check eliminates the final race.
+
 1. Inspect the final diff and status; preserve unrelated work and confirm every
    approved criterion and visual state. Prepare approved repository changelog
    and documentation updates before the shipping commit so the PR includes them.
@@ -27,9 +35,13 @@ shipping and merge authority; do not ask for either again.
 5. If shipping uncovers a required code change or failed check, set
    `Status: debugging` and return to `debug-feature` for cause and impact
    assessment. Existing Build authority covers in-scope fixes/replanning without
-   another fix-approval question; repeat Build validation and fresh user UAT
-   before shipping a changed candidate. This never permits bypassing a gate.
-6. When required checks pass, merge without asking. If checks are pending, wait;
+   another fix-approval question; repeat Build validation. For integration-only
+   changes preserving accepted behavior, retain acceptance with the reference's
+   delta review and evidence and resume Shipping. Changed/uncertain accepted
+   behavior requires focused UAT; new scope requires a product decision. Do not
+   reopen shipping permission merely because the source revision changed.
+6. When required checks pass and target-freshness requirements above are
+   satisfied, merge without asking. If checks are pending, wait;
    if the workflow must stop, set `Status: awaiting-merge` so a later invocation
    resumes here. Ask only when blocked. Release or deployment requires separate
    authority.

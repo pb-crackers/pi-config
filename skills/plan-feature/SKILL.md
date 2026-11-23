@@ -17,6 +17,11 @@ Replanning a bug does not move it into the feature backlog.
 
 ## Plan
 
+Read `../dev-workflow/references/integration.md`. Verify the recorded remote
+target/base and inspect cross-feature contracts and known concurrent changes.
+Plan integration against current target before final validation/UAT and a
+freshness check before merge; initial planning cannot predict later merges.
+
 1. Read the complete brief, project instructions, relevant code, current diff,
    and existing conventions.
 2. Use a subagent only for a concrete context gap, external question, material

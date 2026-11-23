@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Integrate the current remote target before UAT and recheck before merge;
+  retain acceptance for evidenced behavior-preserving integration repairs,
+  with focused UAT for changed or uncertain behavior.
+
 - Require concrete discussion briefs and collaborative engineering designs,
   connect research discoveries back to requirements, and keep implementation
   slices and tickets anchored to the agreed goal.
