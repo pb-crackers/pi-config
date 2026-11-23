@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Require concrete discussion briefs and collaborative engineering designs,
+  connect research discoveries back to requirements, and keep implementation
+  slices and tickets anchored to the agreed goal.
+
 - Set the default model to GPT 6.2 Sol with medium thinking and configure the
   Pi image-generation extension; preserve current personal Pi preferences.
 

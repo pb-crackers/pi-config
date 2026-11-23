@@ -179,6 +179,28 @@ entries. Track acceptance criteria, dependencies, status, and evidence. A ticket
 is ready only when its blockers pass. On resume, use recorded ticket state;
 ticket completion never replaces whole-feature validation or user acceptance.
 
+## Brief and design readiness
+
+Discussion defines the concrete intended end state, scenarios, rules, boundaries
+and acceptance criteria. Planning explains how to create it: relevant engineering
+contracts, research/reuse choices, dependencies, slices and validation. Keep both
+in the canonical task with precise child links; do not create a second spec
+system. Scale detail to complexity, not a word count or fixed interview rounds.
+
+Build readiness requires enough detail for another agent to proceed without
+inventing consequential behaviour or contracts. Planning discoveries that alter
+intended behaviour, expose missing product decisions or challenge agreed
+constraints return to Discussion with evidence, impact, options and a
+recommendation. Resolve the affected decision, update the same brief/plan and
+dependent tickets, then resume; do not repeat settled questions. Technical
+refinements stay in Planning under existing authority. `--auto` retains its
+approval rules but never substitutes for design readiness.
+
+During Build and resume, keep the parent outcome, current slice, its purpose
+and completion checks explicit in the task. Follow the slice through validation
+before switching unless evidence requires resequencing. This does not add a
+fix-approval gate or require renewed approval for in-scope recovery.
+
 ## Failure recovery
 
 Once the user authorizes Build for a task, that authority covers diagnosis,

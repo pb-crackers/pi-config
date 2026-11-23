@@ -23,12 +23,20 @@ owns user-facing decisions; do not implement during this phase.
 
 ## Clarify and research before choosing a solution
 
-Understand the user's problem before committing to an implementation. Ask
+Understand the intended outcome before committing to an implementation. Ask
 focused rounds of questions in dependency order, with a recommended answer and
 its tradeoff. Ask only questions whose prerequisites are settled; don't repeat
 answered questions or turn a clear request into an exhaustive interview. Look
 up factual answers yourself. The user decides product behaviour, priorities,
 scope, and consequential tradeoffs; do not answer those on their behalf.
+
+Describe the intended end-to-end experience: starting conditions, actions,
+observable results and resulting state. Work through concrete examples, business
+rules, constraints, included/excluded behaviour and relevant loading, empty,
+error, retry, cancellation and recovery states. Scale this to the change;
+skip irrelevant categories rather than inventing requirements. Distinguish
+confirmed decisions, proposed assumptions and unresolved questions. Do not
+require an audience description or problem statement.
 
 Before approving an approach, check existing project capabilities, installed
 dependencies and platform facilities, then relevant maintained open source and
@@ -73,17 +81,24 @@ Created: YYYY-MM-DD
 
 ## Outcome
 
+## End-to-end behaviour and examples
+
 ## Scope
 ### Included
 ### Excluded
 
+## Rules and constraints
+
 ## Success criteria
-- [ ] Observable behavior
+- [ ] Given concrete starting conditions, an action produces an observable result
 
 ## Visual states
 - [ ] Every changed user-visible state, or `Not applicable`
 
 ## Decisions
+
+## Assumptions
+- Proposed assumption, impact if wrong, and how it will be verified or resolved:
 
 ## Research and reuse
 - Candidates, sources, fit/gaps, and selection rationale:
@@ -103,8 +118,19 @@ discussion starts from a captured item, preserve its description. Use
 
 ## Planning gate
 
+Before presenting the brief, check whether another agent could understand the
+intended experience without inventing consequential product behaviour. Resolve
+blocking ambiguity in focused rounds; do not substitute filled headings or a
+fixed question count for readiness. Technical unknowns may proceed to Planning
+when recorded with an investigation path; product assumptions are not decisions.
+
 Present the outcome, scope, success criteria, and visual states. Ask whether the
 user approves the brief for planning.
+
+When Planning returns with a discovery, discuss only the affected decision:
+what changed, its impact, options and recommendation. Update this same brief,
+record the user's resolution and send affected requirements back to Planning;
+do not restart settled discussion or silently change the end state.
 
 - On approval, set `Status: planning` and continue to `plan-feature`.
 - On requested changes, revise the brief and ask again.

@@ -49,6 +49,18 @@ genuinely related reports; QA failures stay attached to their parent task.
    independent concurrent writers each need a separate owned worktree. The
    parent owns integration, scope, decisions, verification, and Git operations.
 
+Keep a short current-work summary in the canonical task: agreed parent outcome,
+active implementation slice/ticket, parent criteria it serves, relevant design
+contracts, completion checks and next dependency. Refresh it on resume and when
+the slice or approach changes; use it in progress updates so the purpose of the
+work stays clear. Do not rewrite the whole spec for each edit.
+
+Finish and verify the current slice before switching unless a discovered
+dependency, invalid assumption or blocker justifies resequencing. Record the
+evidence and plan adjustment, preserving useful work and affected validation.
+Do not absorb unrelated findings into the task. Technical changes within scope
+use existing Build authority; missing product decisions return to Discussion.
+
 When child tickets exist, work only ready tickets in dependency order. Record
 the writer's claim and path before edits. Validate each ticket's acceptance
 criteria and record evidence before marking it `validated`; integrate delegated
