@@ -69,6 +69,15 @@ children pass, verify the entire parent goal and cross-ticket behaviour.
 
 ## Review and validation
 
+Before final validation and UAT preparation, follow
+`../dev-workflow/references/integration.md`: fetch and integrate the current
+remote target in this task's worktree, assess semantic impacts and validate the
+combined candidate. Record target/candidate identities and integration evidence.
+Repair in-scope compatibility failures under existing Build authority. When
+returning from Shipping, apply the reference's acceptance rules: evidenced
+behavior-preserving integration can return directly to Shipping; changed or
+uncertain accepted behavior returns for focused UAT after validation.
+
 Use a fresh-context reviewer before UAT when independent review is useful. Add a
 specialist review only for a specific concern. Route accepted fixes through the
 sole writer and re-review only substantial or high-risk fixes.
@@ -179,9 +188,12 @@ it created using its recorded UUID.
    hierarchy, and logs where available), session closure, presentation surface,
    and limitations in the Obsidian task record or outbox. Preserve evidence
    needed for acceptance outside temporary session files before ending sessions.
-2. Confirm all parent and child criteria and required integration checks pass.
+2. For post-acceptance behavior-preserving integration with recorded acceptance
+   applicability under the integration rules, restore `Status: shipping` and
+   return to `ship-feature` after validation; do not request new UAT. Otherwise,
+   confirm all parent and child criteria and required integration checks pass.
    Record the implemented plan, criterion-to-evidence mapping, deviations and
    limitations, and concrete user UAT steps. Set the task to `awaiting-uat`.
-3. Continue directly to `uat-feature`; do not ask whether to begin UAT.
+3. When `awaiting-uat`, continue directly to `uat-feature`; do not ask whether to begin UAT.
 
 Build validation is evidence, not user approval.

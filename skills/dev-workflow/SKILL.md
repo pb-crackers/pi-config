@@ -41,6 +41,11 @@ After work is requested:
 
 ## Working copies
 
+Follow [concurrent integration](references/integration.md) for remote-base
+freshness, before-UAT integration, final merge checks and acceptance retention.
+Fetch the intended target before creating new worktrees; do not start from a
+stale local main. Record the remote, target branch and fetched base SHA.
+
 For new repository-editing work, create a dedicated Git worktree and feature
 branch from the intended base. Ordinary questions and read-only exploration do
 not need one. Resume a recorded task in its existing worktree; do not nest a new
@@ -235,8 +240,10 @@ asking whether to fix the error or implement the in-scope revised plan. Report
 what changed and why as progress, not a permission request. Ask only for an
 unresolved product/scope decision, genuinely missing external permission/access,
 an action outside existing authority, or a blocker that requires the user.
-Keep the final UAT acceptance gate; previous acceptance does not cover a changed
-candidate. Standalone diagnosis before Build was authorized still uses its
+Keep the final UAT acceptance gate. Behavior-preserving integration may retain
+recorded acceptance only with the delta review and fresh evidence required by
+the integration rules; changed or uncertain accepted behavior needs focused UAT.
+Standalone diagnosis before Build was authorized still uses its
 initial fix-plan gate unless the user already authorized the fix.
 
 ## Routing
