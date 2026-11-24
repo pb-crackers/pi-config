@@ -2,8 +2,8 @@
 name: discuss-feature
 description: >
   Discussion phase used by dev-workflow for intentionally started new or
-  unclear work. Collaboratively defines the intended functionality, scope,
-  success criteria and visual states in conversation before implementation planning.
+  unclear work. Interviews the user to define discrete tasks, intended behaviour,
+  scope and success criteria clearly enough for engineering and ticket planning.
 ---
 
 # Discuss Feature
@@ -18,23 +18,34 @@ owns user-facing decisions; do not implement during this phase.
    record, and relevant code. Do not load unrelated project queues/history.
 2. Use a subagent only for a concrete context gap or material independent
    challenge that should save time.
-3. Read load-bearing files, resolve conflicting evidence, and ask only the
-   remaining product, scope, naming, risk, or visual questions.
+3. Read load-bearing files and resolve conflicting evidence. Actively identify
+   missing product, scope, naming, risk and visual requirements; the absence of
+   stated uncertainty is not evidence of clarity.
 
 ## Clarify and research before choosing a solution
 
-Make this a collaborative conversation. Start with a short reflection of what
-you understand the user wants and the meaningful gaps to explore. Ask a small,
-focused set of questions with options and recommendations, then wait for the
-answers before treating those choices as settled. Respond to the answers:
-explain implications, challenge conflicting requirements and walk through
-concrete behaviour together. Surface consequential assumptions as proposals,
-not decisions silently made on the user's behalf.
+Treat a short request as intake, not a complete specification. Own the work of
+uncovering missing requirements through an adaptive interview. Start with a
+short reflection of what you understand and the meaningful gaps to explore.
+Ask focused questions with options, recommendations and tradeoffs, then wait
+for answers before treating choices as settled. Use each answer to choose the
+next useful follow-up: explain implications, challenge conflicting requirements
+and test concrete scenarios together. Surface consequential assumptions as
+proposals, not decisions silently made on the user's behalf.
 
-Let the exchange follow the uncertainty, without a minimum duration or number
-of rounds. Reuse answers already given; a complete supplied brief or an explicit
-request to skip exploration does not need a manufactured interview. Keep the
-intended functionality and scope visible in chat as understanding develops.
+Continue while consequential ambiguity remains about the intended behaviour
+or task boundaries; do not stop just because a brief can be written. Explore
+what broad terms mean, required functionality, concrete scenarios, rules and
+exceptions, scope boundaries, and which distinct outcomes are included now.
+These are investigation areas, not a fixed questionnaire. Keep the developing
+task definition visible in chat and reuse answers already given.
+
+Clarity is the stopping condition, not duration or question count. Assess a
+supplied brief against the readiness criteria below before deciding it needs
+no further questions. Respect an explicit request to skip exploration without
+inventing decisions or silently declaring unresolved requirements ready. If the
+user is unsure, help compare options or identify focused research/prototyping
+to inform the decision; do not press for an arbitrary answer.
 
 Ask questions in dependency order once their prerequisites are settled and
 look up factual answers yourself. The user decides product behaviour,
@@ -149,11 +160,15 @@ discussion starts from a captured item, preserve its description. Use
 
 ## Planning gate
 
-Before presenting the brief, check whether another agent could understand the
-intended experience without inventing consequential product behaviour. Resolve
-blocking ambiguity in focused rounds; do not substitute filled headings or a
-fixed question count for readiness. Technical unknowns may proceed to Planning
-when recorded with an investigation path; product assumptions are not decisions.
+Before presenting the brief for approval, check that the interview has defined
+discrete task outcomes, included/excluded functionality, concrete end-to-end
+behaviour, relevant rules/failure cases and observable success criteria. Could
+another agent design the implementation and decompose tickets without inventing
+product requirements that determine their scope? If not, continue the interview
+on the gaps; filled headings or a polished summary are not evidence of clarity.
+Discussion defines WHAT should happen; Planning designs HOW and creates the
+implementation tickets. Technical unknowns may proceed with an investigation
+path; unresolved product choices determining task/ticket scope may not.
 
 Before moving to Planning, give a self-contained summary directly in chat,
 scaled to the work:
