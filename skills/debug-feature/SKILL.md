@@ -1,133 +1,57 @@
 ---
 name: debug-feature
 description: >
-  Diagnosis and impact assessment for reported bugs, failed validation, and
-  UAT feedback. Establishes evidence before routing to a bounded fix, renewed
-  research/planning, or a product decision; prevents repeated symptom patches.
+  Establish evidence-backed root cause and impact for reported bugs or uncertain
+  Build failures; route reported bugs through Discussion and keep technical
+  Build recovery inside existing execution authority.
 ---
 
 # Debug Feature
 
-Diagnose here, then apply fixes through Build. For recovery within an authorized
-dev-workflow, that handoff is automatic within the existing scope; do not stop
-to request fix approval. Standalone diagnosis without existing fix authority
-uses the initial gate below. Do not commit during diagnosis. Temporary
-reproductions and targeted instrumentation are allowed within existing
-authority; record and remove them when no longer needed. Set the
-Obsidian task record to `Status: debugging`. Read
-`../dev-workflow/references/records.md`. For a selected standalone bug, expand
-its queue row into the existing or new `Type: bug` task at
-`<project>/Tasks/<slug>.md`, preserving the original report, priority and reported
-date, and link it from `bugs.md`. Keep a feature/improvement under diagnosis in
-its existing task and feature index; do not create a duplicate bug. Update only
-the matching queue entry at phase transitions, or queue all intended mutations
-in `OBSIDIAN_OUTBOX.md` when offline.
+Record the entry context: **reported bug** (including UAT failures routed here)
+or **Build recovery**. Read the original symptom, expected behavior, candidate,
+relevant brief/design/tickets and previous attempts. Follow
+`../dev-workflow/references/records.md`; preserve the task/report identity and
+update its matching row. Standalone selected bugs expand into canonical bug
+records; feature QA failures stay attached to their existing task, not duplicate
+standalone reports. Ask only for facts needed from the user that cannot be found.
 
-## Report
+## Root cause and impact
 
-Ask only for missing information:
+Set `debugging`. Establish a repeatable reproduction with expected/actual
+results where possible. Trace the affected flow, callers, contracts, dependencies
+and state. Distinguish product defects from changed requirements, stale builds,
+test setup and missing access. Record evidence limits if reproduction fails;
+do not claim a proven root cause without support.
 
-- What should happen?
-- What happens instead?
-- How can it be reproduced, if known?
+For uncertainty, test predictions that distinguish plausible causes, changing
+one variable at a time. Use targeted removable instrumentation without exposing
+secrets; measure performance before altering it. Repeated failures, multiple
+affected flows or contradicted assumptions require broader research/design
+reassessment. A clear local defect needs only a short diagnosis and regression
+check, not a mandatory architecture review.
 
-## Investigate
+Record symptom, root cause/evidence, affected behavior/criteria, previous failed
+assumptions, smallest correction direction and validation, reopened tickets/stale
+evidence, and next route with authority source. Preserve useful code; remove
+temporary instrumentation after validation. Diagnose here; implementation belongs
+to Build. Do not commit during diagnosis.
 
-1. Read the parent brief, research, approved plan, relevant tickets, candidate,
-   previous attempts and exact reported failure. Distinguish a product defect
-   from a changed requirement, stale candidate, missing access or test setup.
-2. Prefer a repeatable check that fails on this specific symptom: an existing
-   test, a small command/harness, UI automation, or a documented manual path.
-   Record the invocation, actual result and expected result. Minimise a complex
-   reproduction without losing the original failure; raise the reproduction
-   rate for intermittent bugs. If reproduction is unavailable, state what was
-   tried and the evidence limit; do not claim a proven cause or fix.
-3. Trace the full affected flow, callers, shared dependencies, state ownership,
-   data contracts, and related success criteria. Ask whether the proposed fix
-   would break dependent behaviour or whether the chosen approach is wrong.
-   Repeated unsuccessful fixes, multiple affected flows, or contradicted design
-   assumptions require broader research and planning, not another symptom patch.
-4. For uncertain causes, compare falsifiable hypotheses and test the predictions
-   that distinguish them, one variable at a time. Use targeted instrumentation
-   with a unique removable marker; redact secrets in commands and evidence.
-   For performance issues, measure a baseline before changing the implementation.
-5. Revisit relevant primary sources and reuse options when evidence challenges
-   the approach. Scale investigation to the failure; an obvious local defect
-   needs a short evidence-backed diagnosis, not a mandatory architecture review.
-   Use independent investigation only for a concrete gap that should save time.
+## Route
 
-## Record
+- **Reported bug:** after RCA set `discussing` and use `discuss-feature` to confirm
+  the intended correction and task boundaries, then Planning/tickets → Build →
+  UAT. Carry RCA evidence forward and reuse already agreed behavior. This is the
+  normal workflow for fixing bugs, not an isolated fix-plan approval ceremony.
+- **Build recovery:** a bounded fix returns to Build; a technical design issue
+  uses Planning to revise affected contracts/tickets, then returns to Build.
+  Existing Build authority covers both without a user question or progress report.
+  Only a genuinely unresolved product/scope decision returns to Discussion.
+- **Setup/candidate issue:** restore preparation and revalidate under existing
+  authority; seek missing access rather than changing product behavior to hide it.
+- **No viable evidence-backed next step:** preserve findings and report the
+  precise user-dependent blocker. Do not repeat the same patch indefinitely.
 
-Add or update this section in the task record:
-
-```markdown
-## Debug
-
-### Report
-
-### Root cause
-- Symptom:
-- Root cause:
-- Evidence:
-
-### Fix plan
-- Smallest fix:
-- Validation:
-
-### Impact and route
-- Affected flows, dependencies, and parent/ticket criteria:
-- Previous attempts and invalidated assumptions:
-- Local defect, implementation/design issue, changed requirement, or setup issue:
-- Research/replanning needed and evidence:
-- Reopened tickets and invalidated validation:
-- Next phase and authorization:
-```
-
-Keep the fix within the reported scope and include a check that proves the bug
-is fixed. For UI bugs, include the required user-facing state and visual
-validation.
-
-## Route before editing
-
-- Local defect: record a bounded fix and its dependency/regression checks, then
-  continue Build under existing task authority, or use the initial gate below
-  when no fix authority exists.
-- Implementation or architectural issue: record why the approach failed, set
-  `Status: planning`, and return to `plan-feature` to research alternatives and
-  revise affected tickets. A larger implementation change can remain within
-  scope; new product behaviour or consequential unresolved tradeoffs cannot.
-- Changed or unclear requirement: set `Status: discussing` and return to
-  `discuss-feature` for the user's decision, including under `--auto`.
-- Candidate/setup issue: record the cause and return to Build for preparation
-  and required revalidation when authority permits; seek missing access rather
-  than changing product behaviour to hide the problem.
-
-Preserve useful code and evidence. Do not reset the feature, add unrelated
-refactors, or lower success criteria. If no viable next approach remains,
-record the blocker and stop the loop.
-
-## Return to Build or initial approval
-
-First check the task's `Build authorization` and approval history. If diagnosis
-was entered from an authorized Build/test/UAT-recovery loop, record the root
-cause and fix plan as covered by that authority, set `Status: approved`, and
-continue directly to `build-feature`. Do this in manual mode too; do not require
-`--auto`, ask "may I fix it?", or stop after presenting a fix plan. The same
-authority covers in-scope technical replanning through `plan-feature`.
-
-Recorded `--auto` or an explicit user instruction already authorizing a bounded
-fix also satisfies the gate. Preserve the actual authority source; never label
-an internal plan revision as newly user-reviewed. Unresolved evidence requires
-more investigation or a blocker report, not an approval question for its own sake.
-
-Only for an initial standalone diagnosis or other task without existing Build/
-fix authority, present the root cause analysis and fix plan and ask whether to
-approve it for Build. New product/scope decisions, revoked authority and missing
-external permissions still return to the user under the parent rules.
-
-- On approval, set `Status: approved` and continue to `build-feature`.
-- On requested changes or unresolved evidence, remain `debugging`.
-
-Build owns implementation, review, fresh-build validation, and UAT handoff.
-It must rerun the original user scenario and affected dependency checks, and
-remove temporary instrumentation, before presenting a new candidate.
+Build reruns the original scenario and dependent checks. User-reported UAT
+failures require focused user retesting after repairs; agent tests cannot accept
+those failures on the user's behalf.

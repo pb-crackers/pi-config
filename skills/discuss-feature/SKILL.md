@@ -1,198 +1,64 @@
 ---
 name: discuss-feature
 description: >
-  Discussion phase used by dev-workflow for intentionally started new or
-  unclear work. Interviews the user to define discrete tasks, intended behaviour,
-  scope and success criteria clearly enough for engineering and ticket planning.
+  Interview the user to turn a short request or diagnosed bug into discrete tasks,
+  agreed behavior, scope and success criteria before engineering/ticket planning.
 ---
 
 # Discuss Feature
 
-Use only after `dev-workflow` intentionally enters tracked work. An ordinary
-question or brainstorming request does not create a task record. The parent
-owns user-facing decisions; do not implement during this phase.
+Enter from dev-workflow for intentional work; do not implement here. Read the
+request, selected task, applicable RCA, project instructions and relevant code.
+Preserve task type/report and follow `../dev-workflow/references/records.md`.
 
-## Understand
+## Interview
 
-1. Read the request, project instructions, selected queue entry and linked task
-   record, and relevant code. Do not load unrelated project queues/history.
-2. Use a subagent only for a concrete context gap or material independent
-   challenge that should save time.
-3. Read load-bearing files and resolve conflicting evidence. Actively identify
-   missing product, scope, naming, risk and visual requirements; the absence of
-   stated uncertainty is not evidence of clarity.
+Treat a short summary as intake, not a specification. Briefly reflect what you
+understand, then uncover missing requirements with focused questions. Ask in
+dependency order, wait for answers, and use them to choose the next follow-up.
+Offer options and recommendations with tradeoffs; explore implications and
+contradictions rather than silently choosing product behavior.
 
-## Clarify and research before choosing a solution
+Work through concrete starting conditions, actions and expected outcomes;
+relevant rules, exceptions, visual/failure/recovery states; included/excluded
+functionality; and observable success criteria. These are investigation areas,
+not a questionnaire or required audience/problem statement. Keep the developing
+scope visible in chat. Look up facts instead of asking the user to research them.
 
-Treat a short request as intake, not a complete specification. Own the work of
-uncovering missing requirements through an adaptive interview. Start with a
-short reflection of what you understand and the meaningful gaps to explore.
-Ask focused questions with options, recommendations and tradeoffs, then wait
-for answers before treating choices as settled. Use each answer to choose the
-next useful follow-up: explain implications, challenge conflicting requirements
-and test concrete scenarios together. Surface consequential assumptions as
-proposals, not decisions silently made on the user's behalf.
+Use code inspection, targeted primary-source research or a bounded `prototype`
+when evidence would change a product decision. Detailed engineering/reuse
+research belongs in Planning. If the user is unsure, help compare options or
+investigate rather than pressing for an arbitrary choice.
 
-Continue while consequential ambiguity remains about the intended behaviour
-or task boundaries; do not stop just because a brief can be written. Explore
-what broad terms mean, required functionality, concrete scenarios, rules and
-exceptions, scope boundaries, and which distinct outcomes are included now.
-These are investigation areas, not a fixed questionnaire. Keep the developing
-task definition visible in chat and reuse answers already given.
+Separate distinct capabilities into tasks using the record rules; shared
+infrastructure does not make different outcomes one task. Confirm which tasks
+are included now. RCA informs the bug's intended correction and boundaries;
+reuse settled expected behavior rather than restarting the interview from zero.
 
-Clarity is the stopping condition, not duration or question count. Assess a
-supplied brief against the readiness criteria below before deciding it needs
-no further questions. Respect an explicit request to skip exploration without
-inventing decisions or silently declaring unresolved requirements ready. If the
-user is unsure, help compare options or identify focused research/prototyping
-to inform the decision; do not press for an arbitrary answer.
+## Readiness and handoff
 
-Ask questions in dependency order once their prerequisites are settled and
-look up factual answers yourself. The user decides product behaviour,
-priorities, scope and consequential tradeoffs.
+Continue until discrete task outcomes, behavior, boundaries and criteria are
+clear enough for engineering design and ticket decomposition without invented
+product requirements. Clarity, not elapsed time, question count or a completed
+document, ends exploration. Reuse existing answers; assess supplied briefs by
+that standard. Respect explicit requests to skip exploration while keeping any
+blocking unresolved decisions visible. Technical unknowns may enter Planning
+with an investigation path; unsettled product choices determining scope may not.
 
-Describe the intended end-to-end experience: starting conditions, actions,
-observable results and resulting state. Work through concrete examples, business
-rules, constraints, included/excluded behaviour and relevant loading, empty,
-error, retry, cancellation and recovery states. Scale this to the change;
-skip irrelevant categories rather than inventing requirements. Distinguish
-confirmed decisions, proposed assumptions and unresolved questions. Do not
-require an audience description or problem statement.
+Summarize directly in chat: what we will build, included functionality/examples
+and relevant visual/failure states, exclusions, decisions/tradeoffs, success
+criteria, and engineering questions left for Planning. Keep it short enough to
+review and specific enough to correct without opening a file. Ask the user to
+confirm this understanding using the existing Discussion → Planning gate.
 
-Before approving an approach, check existing project capabilities, installed
-dependencies and platform facilities, then relevant maintained open source and
-established patterns. Use primary sources: official docs, source repositories,
-specifications and first-party APIs. Record citations, fit and gaps, integration
-effort, and relevant compatibility, license and maintenance limits. Compare
-reuse with the smallest custom solution; a dependency is not automatically
-cheaper. Scale research to the decision, and revisit it when new evidence
-invalidates an assumption. Do not build custom machinery merely because the
-initial request described it that way.
+On confirmation, update the same task brief and set `Status: planning`; continue
+to `plan-feature`. A group stays `tracking`; transition only selected confirmed
+tasks. On corrections, revise the affected understanding. On pause, remain
+`discussing`. Planning discoveries reopen only the affected decision, then
+update the same brief and resume Planning.
 
-For large uncertain efforts, keep a decision map in the parent task: destination,
-resolved decisions with evidence, precise open questions and their blockers,
-in-scope unknowns not yet specific enough to investigate, and excluded work.
-Create linked decision tickets under `<task-slug>/` when a question needs a
-separate investigation. Record type (research, prototype, or user decision),
-question, dependencies, resolution and evidence; never mark an unanswered user
-decision resolved by inference. Resolve enough of the map to plan executable
-work; don't invent implementation tickets for an approach still undecided.
-
-Use `prototype` only when a small UI or logic artifact would settle a specific
-question. Record the question and verdict; stop when it is answered. Exploration
-does not authorize production integration. Keep reusable domain definitions and
-consequential decision rationale in existing project docs when appropriate,
-without creating a glossary or ADR for every task.
-
-## Separate outcomes before implementation tickets
-
-Check whether a broad request contains capabilities with distinct behaviour,
-rules, acceptance criteria or priorities. For example, "add logging" may mean
-error monitoring and product usage analytics: separate tasks sharing a request,
-not one oversized implementation ticket. Shared infrastructure alone does not
-make them one task. Keep a genuinely coherent small request together.
-
-Present the proposed task boundaries, included outcomes, dependencies and
-exclusions within the existing brief confirmation. When the request is split,
-retain its original description in a lightweight group and create/reuse linked
-task records under the record rules. Each task owns its brief and success
-criteria; decide detailed implementation tickets in Planning. Do not infer
-that decomposition authorizes building every task or reclassify existing bugs.
-
-## Record
-
-Capture decisions as they emerge and keep documentation proportional to the
-work. Avoid producing speculative documents ahead of the conversation. The
-brief preserves shared understanding; the user should not need to open it to
-understand what is proposed or correct the scope.
-
-Read `../dev-workflow/references/records.md`. Create or update the canonical
-`<project>/Tasks/<slug>.md` through `dev-workflow` and link it from the matching
-queue: bugs stay in `bugs.md`, features/improvements in the feature index.
-Preserve an existing type and report; splitting distinct outcomes uses the
-linked grouping rules, not duplicate reports for the same work. Keep the row's
-status in sync. When offline, queue all mutations in
-`OBSIDIAN_OUTBOX.md`. Record:
-
-```markdown
-# Feature name
-
-Type: feature
-Status: discussing
-Created: YYYY-MM-DD
-
-## Outcome
-
-## End-to-end behaviour and examples
-
-## Scope
-### Included
-### Excluded
-
-## Rules and constraints
-
-## Success criteria
-- [ ] Given concrete starting conditions, an action produces an observable result
-
-## Visual states
-- [ ] Every changed user-visible state, or `Not applicable`
-
-## Decisions
-
-## Assumptions
-- Proposed assumption, impact if wrong, and how it will be verified or resolved:
-
-## Research and reuse
-- Candidates, sources, fit/gaps, and selection rationale:
-
-## Open decisions
-- Question, blockers, owner, and resolution/evidence:
-
-## Completion
-- PR:
-- Merge:
-- Changelog:
-```
-
-Keep the brief about outcomes and constraints, not implementation details. When
-discussion starts from a captured item, preserve its description. Use
-`Type: improvement` for improvements and preserve `Type: bug` for bug work.
-
-## Planning gate
-
-Before presenting the brief for approval, check that the interview has defined
-discrete task outcomes, included/excluded functionality, concrete end-to-end
-behaviour, relevant rules/failure cases and observable success criteria. Could
-another agent design the implementation and decompose tickets without inventing
-product requirements that determine their scope? If not, continue the interview
-on the gaps; filled headings or a polished summary are not evidence of clarity.
-Discussion defines WHAT should happen; Planning designs HOW and creates the
-implementation tickets. Technical unknowns may proceed with an investigation
-path; unresolved product choices determining task/ticket scope may not.
-
-Before moving to Planning, give a self-contained summary directly in chat,
-scaled to the work:
-
-- what we are building and the intended result;
-- included functionality, main interactions, applicable failure behaviour and
-  changed visual states;
-- excluded or deferred work;
-- decisions made and meaningful tradeoffs;
-- observable success criteria;
-- remaining engineering research/design questions for Planning.
-
-Distinguish agreed scope from unresolved proposals. The summary must be specific
-enough for the user to correct without opening a document; link the brief as
-supporting detail. Ask whether the user approves that scope for Planning using
-the existing gate. A completed document alone does not establish shared scope.
-
-When Planning returns with a discovery, discuss only the affected decision:
-what changed, its impact, options and recommendation. Update this same brief,
-record the user's resolution and send affected requirements back to Planning;
-do not restart settled discussion or silently change the end state.
-
-- On approval, set the selected executable task to `Status: planning` and
-  continue to `plan-feature`. For a split request keep the group `tracking`;
-  only transition the executable briefs actually approved for planning.
-- On requested changes, revise the brief and ask again.
-- On pause, leave `Status: discussing`.
+Record decisions as they emerge, with agreed versus proposed/unknown clearly
+separated. The canonical brief contains outcome, behavior/examples, scope,
+rules, criteria, applicable visual states, decisions, assumptions/open questions
+and useful research evidence. Keep documentation proportional; it records the
+conversation and never substitutes for it.

@@ -1,71 +1,41 @@
 ---
 name: ship-feature
 description: >
-  Shipping phase used by dev-workflow after UAT approval. Runs the project's
-  headless gate, opens and merges a pull request automatically, and records
-  completion.
+  Ship an accepted task through required checks, push/PR/merge, completion records
+  and owned-worktree cleanup without asking again for shipping permission.
 ---
 
 # Ship Feature
 
-Require an Obsidian task record with `Status: approved-to-ship`, `shipping`, or
-`awaiting-merge` and recorded UAT approval. That approval grants the parent
-shipping and merge authority; do not ask for either again.
+Require recorded UAT acceptance and `approved-to-ship`, `shipping` or
+`awaiting-merge`. That acceptance grants commit/push/PR/merge authority, not
+separate release/deployment authority. Follow
+`../dev-workflow/references/integration.md` for before-gate integration, final
+target freshness, required checks/queues and acceptance applicability.
 
-Follow `../dev-workflow/references/integration.md`. Before the shipping gate,
-fetch the intended remote target and integrate it if needed in this task's
-worktree. Assess incoming/combined changes and record candidate, target and
-acceptance applicability. Check freshness again immediately before merge;
-repeat integration and required validation if the target advanced, or use an
-existing merge queue that validates the combined result. Respect required
-checks; do not claim a manual freshness check eliminates the final race.
+1. Inspect approved scope and final diff. Prepare required changelog/docs, set
+   `shipping` and commit only task files. Run every project-defined headless
+   shipping gate before each push; never bypass a hook or silently ignore failure.
+2. Push and open the PR automatically. Record commits, acceptance evidence,
+   commands/results and PR. Wait for required remote checks; if none exist,
+   successful local gates are the check evidence.
+3. For failures needing code changes, use Build's silent diagnosis/fix/test loop
+   under existing authority. Apply integration rules to retain acceptance for
+   evidenced behavior-preserving repairs; changed/uncertain behavior needs focused
+   UAT. New product decisions return to Discussion. Do not ask again merely
+   because the source revision or main changed.
+4. When gates and target-freshness requirements pass, merge without asking.
+   Respect configured combined-result checks/queues. If pending work forces a
+   stop, record `awaiting-merge` and the precise blocker; do not claim merge.
+5. Verify merge preservation, then apply the record rules: resolve only this
+   task, reconcile its queue and compact completion log, record checks/PR/merge,
+   acceptance, limits and pending cleanup. Update group rollup without completing
+   siblings or unshipped outcomes. Ship required missing repository docs through
+   the same gates rather than leaving a stranded local commit.
+6. Preserve assets/evidence and verify no writer/process still needs the worktree.
+   Follow `../dev-workflow/references/working-copies.md` for safe cleanup, including
+   squash/rebase preservation and dirty/ignored work. Never force-remove or delete
+   another task's worktree. Report pending cleanup explicitly.
 
-1. Inspect the final diff and status; preserve unrelated work and confirm every
-   approved criterion and visual state. Prepare approved repository changelog
-   and documentation updates before the shipping commit so the PR includes them.
-2. Set `Status: shipping`, commit only approved task files, and run every
-   project-defined headless shipping command before each push, including any
-   app-specific validation script named in project instructions. Do not open
-   Device Hub merely to ship and never bypass a tracked hook.
-3. When the gate passes, push and open the pull request without asking. Record
-   the command, result, UAT approval, commits, and PR URL in the task record or
-   outbox.
-4. Wait for required remote checks. If none exist, the successful local gate is
-   the build evidence. Never ignore a failed check without explicit approval.
-5. If shipping uncovers a required code change or failed check, set
-   `Status: debugging` and return to `debug-feature` for cause and impact
-   assessment. Existing Build authority covers in-scope fixes/replanning without
-   another fix-approval question; repeat Build validation. For integration-only
-   changes preserving accepted behavior, retain acceptance with the reference's
-   delta review and evidence and resume Shipping. Changed/uncertain accepted
-   behavior requires focused UAT; new scope requires a product decision. Do not
-   reopen shipping permission merely because the source revision changed.
-6. When required checks pass and target-freshness requirements above are
-   satisfied, merge without asking. If checks are pending, wait;
-   if the workflow must stop, set `Status: awaiting-merge` so a later invocation
-   resumes here. Ask only when blocked. Release or deployment requires separate
-   authority.
-7. After merge, follow `../dev-workflow/references/records.md`. For `Type: bug`,
-   move its active `bugs.md` row to the `bugs-log.md` table, preserving its
-   priority, summary, reported date and canonical task link; add the actual
-   resolved date and PR. For features/improvements, move the feature-index
-   entry to a compact `implementation-log.md` row (Completed, Work/task links,
-   Outcome, PR). First preserve full acceptance, merge/check evidence, deployment
-   limits and cleanup/follow-ups in the canonical task and update its record
-   summary; do not append this narrative to the log. A feature that
-   passed through debugging remains a feature, not a new bug. Update only this
-   task and matching row; preserve unrelated history. If required repository documentation remains,
-   ship it through the same gate and a follow-up PR before marking the task
-   `done`; do not strand a new local commit after merge. Otherwise set
-   `Status: done` once completion records are reconciled.
-   If this task belongs to a group, update only its linked progress under the
-   record rules. Do not complete siblings or close the group because this PR
-   merged; require accepted, merged evidence for all agreed group outcomes.
-8. After confirming merge preservation, record child-ticket completion and
-   follow `dev-workflow`'s working-copy cleanup rules. Preserve external skill
-   edits and needed evidence that are not in this PR. Leave owned worktrees
-   before removing them; keep dirty, active, or unpreserved worktrees and report
-   pending cleanup. Never use force removal or delete another task's branch.
-
-Report the branch, commits, PR, checks, merge status, approval evidence, and any
-remaining risk. Never claim completion for an unapproved or blocked step.
+Report commit/PR/merge status and material check/cleanup limits. Never claim a
+blocked or unaccepted step is complete.

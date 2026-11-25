@@ -72,6 +72,6 @@ Use combined-result checks/queue when available; do not change repository policy
 as part of ordinary shipping. If the target advances while checks run, repeat
 integration and affected validation unless the configured queue validates the
 actual combined result. Without such enforcement, fetch immediately before
-merge and report that this is a best-effort freshness check, not an atomic
+merge and record that this is a best-effort freshness check, not an atomic
 guarantee. Do not retry indefinitely without progress; report a moving-target
 blocker if a stable validated candidate cannot be reached.

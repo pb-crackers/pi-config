@@ -1,98 +1,78 @@
 ---
 name: uat-feature
 description: >
-  User acceptance phase used by dev-workflow after Build validates the current
-  candidate. Presents the running app in the required state, records user
-  approval, and returns failed work to implementation.
+  Guide user acceptance one case at a time with persisted candidate-specific
+  results; collect failures, review them after testing, and route corrections
+  or diagnosed bugs before focused retesting and shipping.
 ---
 
 # UAT Feature
 
-Require an Obsidian task record with `Status: awaiting-uat`. The parent owns the
-running app, evidence, and user questions.
+Require `awaiting-uat` and Build's validated, prepared candidate. Follow
+`../dev-workflow/references/records.md` for the UAT record and matching queue.
+Confirm artifact/source/dirty diff, integrated target, setup, check evidence,
+limitations and planned cases. If stale or unavailable, return to Build for
+preparation; do not treat a missing environment as a product defect. For iOS,
+follow the UAT/device section of `../dev-workflow/references/ui-verification.md`.
 
-Follow `../dev-workflow/references/records.md` for the matching queue entry.
-Keep the bug active during UAT and shipping; tests and acceptance alone do not
-set its resolved date. Requested changes preserve the task and queue identity.
+## Run the session
 
-Apply simulator/session requirements and cleanup only to iOS UI candidates.
-For other work, verify the current artifact or running service and its recorded
-checks; do not require a simulator, scheme, or screenshot when inapplicable.
+Open or resume `Tasks/<task-slug>/uat.md`; preserve prior results and identify
+which candidate each applies to. Set session `testing` when presenting cases.
+State briefly what is ready and any material
+limits. Present **one test case at a time**: feature/case name, needed setup,
+clear actions and expected observable result. Wait for the user's response
+before recording a result or presenting the next case.
 
-## Prepare
+- Explicit approval/pass: record `approved`, the response and tested candidate.
+- Failure: record `failed` and the user's report verbatim; preserve evidence.
+- Cannot test or explicit skip: record `blocked`/`skipped` and reason. Neither
+  counts as approval. Clarify an ambiguous response; silence/empty input is not pass.
 
-For every candidate, confirm Build recorded the artifact/build, source revision
-including uncommitted changes, applicable setup, commands, criterion evidence,
-limitations, and user test steps. Confirm it matches current source; if stale,
-return to Build for fresh validation before acceptance. Present the artifact or
-running service in the required state.
+Persist each response and the next case so interrupted sessions can resume.
+Collect failures and continue independent cases without changing the candidate
+mid-session. Mark dependent cases blocked when a failure prevents testing them;
+do not abandon independent coverage. An explicit user request for an immediate
+repair can interrupt testing, but preserve results and reassess candidate/retest
+scope before resuming.
 
-Confirm Build recorded integration with the current fetched remote target under
-`../dev-workflow/references/integration.md` before final validation. Record that
-target SHA with acceptance. Later target changes use the reference's delta
-review and evidence rules; source identity changes alone do not require new UAT.
+## Review failures after testing
 
-For iOS UI candidates, additionally:
+Set session state `review`. Present failed/blocked/skipped items and review their
+disposition with the user. Distinguish defects, misunderstandings and new requests:
+- A clear bounded correction with understood impact can use the short edit path
+  through Build, validate, and return for focused retest. Small diff or cosmetic
+  wording alone is not proof it is safe; unclear cause/impact needs diagnosis.
+- A defect requiring investigation uses Debug RCA → Discussion → Planning/tickets
+  → Build → UAT. This reported-bug Discussion confirms the correction after RCA,
+  even when existing Build authority already covers its implementation; it is
+  not another request for fix permission. Reuse the current task/report; create
+  a separate linked follow-up only for genuinely separate, explicitly scoped work.
+- A changed requirement returns to Discussion. Do not silently broaden the task.
 
-1. Confirm Build recorded the workspace, scheme, dedicated simulator UUID and
-   creation ownership, conditions, state setup, and required visual states.
-2. Confirm the candidate still matches current source. If the candidate is stale
-   or the dedicated simulator is missing, close remaining interaction sessions,
-   clean up any surviving task-created simulator, and return to Build for a
-   fresh candidate and dedicated simulator; do not use a shared simulator.
-   A closed MCP interaction session alone does not invalidate the candidate.
-3. Reuse the dedicated simulator and Build evidence. If automation is needed,
-   load the installed `xcode-device-interaction` skill and reopen a session targeting its
-   exact UUID. Restore required conditions and app state through supported tools,
-   existing runtime seed or automation, or the normal user path. Do not alter
-   product source merely to stage UAT. If a rebuild is needed, return to Build
-   for validation of that candidate before acceptance.
-4. Leave the app open at the first required test state in Simulator or Device
-   Hub when available. End idle interaction sessions and confirm the app remains
-   available; restore the same candidate and state if necessary. Tell the user
-   which simulator to use and provide the test steps and expected results.
+Agree the failed-item disposition here rather than asking separately before every
+in-scope fix. Repairs remain under existing Build authority. After changes,
+set session `awaiting-retest`, rebuild/revalidate and retest failed and affected
+cases one at a time; keep attempt history. Use
+`../dev-workflow/references/integration.md` for evidence-based
+retention of unaffected acceptance. Never approve a repaired reported failure
+solely from automated checks.
 
-## Acceptance gate
+## Finish
 
-Exercise each success criterion through the real user-facing path where
-practical. Present every criterion with its evidence, the captured screenshots,
-and the running app when applicable, or the actual non-app artifact. Ask the
-user to approve, request changes, or state that
-they cannot verify it. A build, test, review, or screenshot is not approval.
+Testing finished is not acceptance. Keep `awaiting-uat` while required cases are
+failed, pending, blocked or skipped. Any explicit waiver/deferral must identify
+the affected criteria and user decision; do not silently remove failures or call
+unverified behavior passed. Scope changes follow Discussion/Planning.
 
-Summarise the implemented plan, reused solutions, validated tickets, final
-integration checks, and deviations/limitations. Give concrete test steps and
-expected results. For non-app work, present the actual artifact and appropriate
-verification steps; simulator-specific requirements apply only to iOS UI work.
+When all required cases and changed visual states have user approval (or an
+explicitly recorded accepted scope adjustment), summarize acceptance and limits,
+record the accepted candidate, set session `accepted` and task `approved-to-ship`.
+For iOS, complete the
+owned-device cleanup in the UI reference first. User acceptance grants existing
+commit/push/PR/merge authority; continue to `ship-feature` without another shipping
+question. Keep bugs active until confirmed merge under the record rules.
 
-- If approved, record the user's acceptance for this exact candidate. For iOS
-  UI, end remaining MCP interaction sessions, then use `xcrun simctl` to shut
-  down and delete the task-created dedicated simulator by its recorded UUID,
-  removing its data, and record cleanup. Set `Status: approved-to-ship`, then
-  load `ship-feature` and complete shipping through merge without another question.
-- If changes are requested, record the failed criterion. For iOS UI, end remaining
-  MCP interaction sessions, shut down and delete the task-created dedicated
-  simulator by its recorded UUID with `xcrun simctl`, and record cleanup. Set
-  `Status: debugging`, then load `debug-feature` to assess the cause and affected
-  dependencies before edits. Reopen affected tickets and invalidate stale
-  evidence. Diagnosis may choose a bounded fix, renewed research/planning, or
-  discussion for a changed requirement. Preserve the task's Build authorization
-  through in-scope recovery; do not ask whether to fix the reported failure,
-  including in manual mode. Rebuild and validate before focused UAT of the
-  reported failure and affected criteria. Preserve unaffected acceptance with
-  evidence under the integration rules; never treat tests as user acceptance
-  of the repaired behavior.
-- If the user cannot verify required behavior, remain `awaiting-uat`, keep the
-  candidate available, end idle interaction sessions if any, and report the blocker.
-
-Never erase or delete a shared or pre-existing simulator. If cleanup fails,
-report the blocker and retry; do not advance to shipping or a new Build with
-that simulator left behind.
-
-UAT approval grants authority to commit, run the project-defined shipping gate,
-push, open a pull request, and merge after required checks pass. Those actions
-belong to `ship-feature`, not UAT. A failed check returns to authorized diagnosis
-and fixes, not a permission question to repair it. Ask again for a user-dependent
-blocker, missing authority, separate release/deployment, or focused acceptance
-when behavior changes or preservation cannot be established under the integration
-rules. Do not ask for shipping permission merely because main advanced.
+If testing must pause, persist the active case, keep the candidate available,
+close idle interaction sessions and state the actual blocker. Do not claim
+acceptance because testing could not be completed.

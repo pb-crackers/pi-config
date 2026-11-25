@@ -3,6 +3,26 @@
 Use the configured active vault and canonical project folder from dev-workflow.
 These are indexes into task records, not additional copies of their reports.
 
+## Resolve the project and offline writes
+
+Use the active vault configured in dev-workflow, never a backup/former vault.
+Derive the lowercase kebab-case slug from the canonical repository directory
+(non-alphanumeric runs become hyphens), not a task worktree name. Reuse the one
+vault project folder matching that normalized slug; ask if multiple match,
+otherwise create it. Reuse its single `*-Features.md`, or create
+`<slug>-Features.md` with Feature Ideas, Improvements, Brain Dump and Roadmap.
+Keep small categories together; do not rename/split indexes without scope.
+Use the queue/task/log layout below. Repository TODO/plan Markdown is legacy
+history, not a second writable workflow source.
+
+If the vault is unavailable, append every intended mutation to
+`OBSIDIAN_OUTBOX.md` at the active task worktree root: timestamp, vault-relative
+target path, operation and complete content. Repository writes require the
+owned worktree, even for the outbox. On resume find the recorded worktree/outbox;
+when access returns reconcile entries in order before further planning writes.
+Preserve conflicting versions and ask when unsafe to merge. Delete the outbox
+only after all entries are applied; a half-applied move is not complete.
+
 | File | Purpose |
 | --- | --- |
 | `<project>-Features.md` | Open feature ideas, improvements, brain dump, roadmap |
@@ -196,6 +216,39 @@ tasks rather than duplicating the narrative. Retain existing recorded dates,
 PRs, statuses and task paths, and check known incoming section links before
 removing old log headings. Do not rewrite unrelated history or create annual
 archives until their size or a requested workflow actually warrants it.
+
+## Candidate-specific UAT records
+
+Adapt the resumable one-case-at-a-time pattern from
+[GSD UAT](https://github.com/pb-crackers/gsd-nitty-gritty/blob/979843c0befc1de28a124a358abb8ad4de4cd4b6/templates/UAT.md)
+to Obsidian and explicit user results; do not inherit automatic document commits.
+
+Link the task's UAT record at `Tasks/<task-slug>/uat.md`; do not put test results
+in queue rows. Planning defines case IDs, requirement links, setup, actions and
+expected results. Build prepares the actual candidate and checks. UAT persists
+responses one case at a time under `uat-feature`; no implicit Git commit is needed.
+The canonical task retains the link, acceptance and eventual shipping evidence.
+
+A compact record contains:
+- Session state: `testing`, `review`, `awaiting-retest`, or `accepted`; active/next
+  case; started/updated dates; source/dirty diff, integrated target and artifact ID.
+- Case index: stable ID, feature/requirement, expected-result summary, latest
+  result and tested candidate. Details/setup/steps live once under each case.
+- Results: `pending`, `approved`, `failed`, `blocked`, `skipped`; user response
+  verbatim, evidence and reason where relevant. Empty/ambiguous input is not pass.
+- Failure review: agreed short correction/Debug/new-requirement route, linked
+  task/ticket/RCA when appropriate, affected retest scope and user decisions.
+- Attempt history: candidate, result, feedback and fix/retest evidence. Preserve
+  prior failures and approvals instead of overwriting their history.
+
+Resume the active case against its recorded candidate. On rebuild, record a new
+candidate and reset only failed/affected cases to pending. Retain other acceptance
+only with the integration reference's applicability evidence, not merely because
+a case passed once. A diagnosed/fixed issue is not user-approved until retested.
+Session `accepted` requires all required cases approved or explicit recorded
+user scope adjustment; blocked/skipped/pending/failed never silently become pass.
+UAT session state is separate from the task's workflow phase. Keep task
+`awaiting-uat` during testing/review; repair routing updates its actual phase.
 
 ## Scoped migration and offline work
 
