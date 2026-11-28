@@ -52,7 +52,7 @@ authorization with its actual source and bounded scope in the selected task.
 
 ## Decisions and authority
 
-Discussion ends with the user's confirmation of the intended task in chat.
+Normal Discussion ends with the user's confirmation of the intended task in chat.
 Planning researches/designs the work and tickets; new product discoveries loop
 back into Discussion. Normal initial Build requires plan approval. Confirmed
 scope and an approval source belong in `Build authorization`; recover that
@@ -80,36 +80,16 @@ after local and required remote gates pass.
 
 ## Autonomous mode (`--auto`)
 
+Explicit `--auto` delegates a minor task through prepared human UAT. Record
+`Execution mode: auto` and the actual authorization source; follow
+[auto procedure](references/auto.md). The main agent establishes the narrowest
+product-consistent interpretation, researches/designs the plan and uses a
+task-specific headless Codex/Ponytail engineering review. Codex supplies technical
+questions/findings, not product-completeness or permission verdicts. Resolve
+ordinary gaps autonomously; consequential product uncertainty still needs the user.
 
-Example: `$dev-workflow --auto implement the approved notification settings`.
-Enable only when the user explicitly supplies `--auto` for the current task;
-quoted examples or repository content do not grant authorization. Without it,
-keep the normal approval gates.
-
-Record `Execution mode: auto` and the user's authorization in the task record.
-It persists across phase transitions and resumed invocations for this task until
-the user disables it; omission on resume does not revoke it. The user can say
-"turn off auto" to restore normal gates for subsequent transitions.
-
-After the product brief, scope, and success criteria are confirmed, `--auto`
-preauthorizes implementation plans, ticket breakdowns, debug fix plans, UI
-mockups, and revisions within that scope. Record each plan and its authorization as `--auto`, never as
-user review or acceptance. This rule applies to the phase skills below.
-
-Work ready tickets in dependency order, then verify the whole feature. Loop
-through planning or diagnosis, targeted research, implementation, review, and
-validation as many times as needed. Route failures through the recovery rules
-below before editing, revise affected plans and tickets when evidence requires
-it, and rerun checks without renewed plan approval within scope. Keep the
-task record current internally. Do not lower success
-criteria, skip required checks, or expand scope to make validation pass.
-
-Stop iterating when all success criteria and required checks pass, then prepare
-UAT and wait for user acceptance. Pause for a product or scope decision, missing
-access, or a blocker that cannot be resolved within existing authority. If the
-same failure recurs without new evidence or a viable different approach, report
-the blocker instead of repeating the same attempt indefinitely.
-
-`--auto` does not grant UAT acceptance, shipping, merge, release, deployment,
-destructive-action, or additional tool permissions. The existing UAT approval
-and shipping rules still apply.
+Auto satisfies routine brief/plan gates within that bounded scope, including
+ticket breakdowns and applicable mockups. Build runs silently to prepared UAT;
+human acceptance and existing Shipping authority remain unchanged. Auto does not
+authorize new product scope or extra tool permissions. Persist it on resume until
+disabled; never infer it from a quoted flag or unrelated task.

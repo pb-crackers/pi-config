@@ -81,6 +81,11 @@ contracts. Resolve blocking questions; assign verification to nonblocking ones.
 Normally present the detailed design and concise breakdown for user approval;
 on approval set `approved` and continue to Build. Corrections remain `planning`.
 Recorded `--auto` authorizes the plan within confirmed scope under dev-workflow's
-existing rules. In-scope technical recovery under existing Build authorization
+rules. Before initial auto Build, follow `../dev-workflow/references/auto.md`
+for the task-specific read-only Codex/Ponytail engineering-plan exchange. The
+main agent resolves findings with evidence and owns the plan; reviewer agreement
+is not product approval. Revisit that exchange for substantial design flaws,
+not routine technical fixes. Missing/failed review is a blocker, not a skipped gate.
+In-scope technical recovery under existing Build authorization
 also returns directly to Build. Neither path skips design/readiness work or
 represents an internal revision as newly user-reviewed.

@@ -11,6 +11,13 @@ Enter from dev-workflow for intentional work; do not implement here. Read the
 request, selected task, applicable RCA, project instructions and relevant code.
 Preserve task type/report and follow `../dev-workflow/references/records.md`.
 
+For recorded `--auto`, use `../dev-workflow/references/auto.md`: the main agent
+applies the readiness criteria to a narrow product-consistent interpretation,
+records its assumptions/exclusions and proceeds to Planning under delegated
+authority. Ask the user only for consequential uncertainty that existing intent
+cannot settle. The Codex session reviews engineering Planning, not product scope.
+The interview and explicit brief-confirmation gate below apply to normal mode.
+
 ## Interview
 
 Treat a short summary as intake, not a specification. Briefly reflect what you
